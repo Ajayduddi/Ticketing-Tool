@@ -1,0 +1,16 @@
+{
+    "vrsion": 2,
+    "name": "ticketing-tool",
+    "builds": [
+        {
+            "src": "src/app.mjs",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/"
+        }
+    ]
+}
