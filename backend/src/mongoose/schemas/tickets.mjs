@@ -49,6 +49,7 @@ const ticketSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
+        default: 'open',
     },
     createdDate: {
       type: Date,

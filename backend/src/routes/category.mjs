@@ -46,7 +46,7 @@ router.post('/createParentCategory', [
                 try {
                     const createParentCategory = new parentCategory(data);
                     const saveParentCategory = await createParentCategory.save();
-                    res.status(200).json({ Result: true, message: 'Parent category created successfully', data: saveParentCategory });
+                    res.status(201).json({ Result: true, message: 'Parent category created successfully', data: saveParentCategory });
                 } catch (error) {
                     res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
                 }
@@ -201,7 +201,7 @@ router.post('/createChildCategory', [
                     try {
                         const createChildCategory = new childCategory(data);
                         const saveChildCategory = await createChildCategory.save();
-                        res.status(200).json({ Result: true, message: 'Child category created successfully', data: saveChildCategory });
+                        res.status(201).json({ Result: true, message: 'Child category created successfully', data: saveChildCategory });
                     } catch (error) {
                         res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
                     }

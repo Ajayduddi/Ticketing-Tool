@@ -90,3 +90,85 @@ export const employeeSchema = {
     },
 
 }
+
+
+export const ticketSchema = {
+    createdByEmployee: {
+        isString: {
+            withMessage: 'Please enter a valid createdByEmployee',
+        },
+        notEmpty: {
+            withMessage: 'CreatedByEmployee is required',
+        },
+    },
+    assignedToEmployee: {
+        isString: {
+            withMessage: 'Please enter a valid assignedToEmployee',
+        },
+    },
+    contactNo: {
+        isNumeric: {
+            withMessage: 'Please enter a valid contact number',
+        },
+        notEmpty: {
+            withMessage: 'Contact number is required',
+        },
+        isLength: {
+            Option: {
+                min: 10,
+                max: 10
+            },
+            withMessage: 'Contact number must be 10 digits',
+        },
+    },
+    requestDetails: {
+        isString: {
+            withMessage: 'Please enter a valid requestDetails',
+        },
+        notEmpty: {
+            withMessage: 'RequestDetails is required',
+        },
+    },
+    parentCategoryId: {
+        isString: {
+            withMessage: 'Please enter a valid parentCategoryId',
+        },
+        notEmpty: {
+            withMessage: 'ParentCategoryId is required',
+        },
+    },
+    childCategoryId: {
+        isString: {
+            withMessage: 'Please enter a valid childCategoryId',
+        },
+        notEmpty: {
+            withMessage: 'ChildCategoryId is required',
+        },
+    },
+    deptId: {
+        isString: {
+            withMessage: 'Please enter a valid deptId',
+        },
+        notEmpty: {
+            withMessage: 'DeptId is required',
+        },
+    },
+    severity: {
+        isString: {
+            withMessage: 'Please enter a valid severity',
+        },
+        notEmpty: {
+            withMessage: 'Severity is required',
+        },
+    },
+    status: {
+        isString: {
+            withMessage: 'Please enter a valid status',
+        },
+    },
+    completedDate: {
+        isDate: {
+            withMessage: 'enter valid date',
+        }
+    }
+}
