@@ -33,7 +33,7 @@ app.use(session({
     maxAge: 1 * 24 * 60 * 60 * 1000,// 1 day
     httpOnly: true,
     secure: false, // set to true if you only serve the app over https
-    sameSite: 'none',
+    sameSite: 'lax',
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
