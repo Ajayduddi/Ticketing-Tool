@@ -5,7 +5,7 @@ import mongoStore from 'connect-mongo';
 import passport from 'passport';
 import 'dotenv/config';
 import apiRouter from '../src/routes/index.mjs';
-
+import cors from 'cors';
 
 // app setup
 const app = express();
@@ -18,6 +18,12 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log(err);
 });
 
+// cors setup
+app.use(cors({
+  origin: 'http://localhost:4200',
+  credentials: true,
+}));
+
 // session setup
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -26,7 +32,7 @@ app.use(session({
   cookie: {
     maxAge: 1 * 24 * 60 * 60 * 1000,// 1 day
     httpOnly: true,
-    secure: true, // set to true if you only serve the app over https
+    // secure: true, // set to true if you only serve the app over https
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
