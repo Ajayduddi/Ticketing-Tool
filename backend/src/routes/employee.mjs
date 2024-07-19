@@ -22,7 +22,7 @@ router.post('/login', [
 }, passport.authenticate('local'), (req, res) => {
     console.log(req.sessionID);
     console.log(req.session);
-    res.status(200).json({ result: true, message: "Login successful", data: req.user.id });
+    res.status(200).json({ result: true, message: "Login successful", data: req.user });
 });
 
 

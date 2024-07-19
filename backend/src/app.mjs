@@ -21,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 // cors setup
 app.use(cors({
   origin: 'http://localhost:4200',
+  allowedHeaders: "*",
   credentials: true,
 }));
 
