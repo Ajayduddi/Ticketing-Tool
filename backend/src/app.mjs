@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 
 // cors setup
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: ['http://localhost:4200', 'https://ticket.test:4200/'],
   credentials: true,
   maxAge: 1 * 24 * 60 * 60 * 1000 // 1 day
 }));
