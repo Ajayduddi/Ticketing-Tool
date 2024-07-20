@@ -26,7 +26,8 @@ passport.use(
             if (!finduser) {
                 throw new Error('User not found');
             }
-            if (comparePassword(password, finduser.password)) {
+            const result = comparePassword(password, finduser.password);
+            if (result) {
                 if (finduser.status == 'Active') {
                     done(null, finduser);
                 } else {
