@@ -22,7 +22,7 @@ import { AvatarModule } from 'primeng/avatar';
 })
 export class EmployeeComponent implements OnInit{
   empObj: EmployeeModel = new EmployeeModel();
-  deptlist$:{name:string, id:number}[] = []; //Observable<DepartmentModel[]> = inject(DepartmentService).getDept();
+  deptlist$:{name:string, id:string}[] = []; //Observable<DepartmentModel[]> = inject(DepartmentService).getDept();
   roles$: {name:string}[] = [];
   empList$: EmployeeModel[] = [];
 
@@ -39,7 +39,7 @@ export class EmployeeComponent implements OnInit{
     this.dept.getDept().subscribe((res:Api_Response) => {
       if(res.result){
         for (let item of res.data) {
-          this.deptlist$.push({name:item.deptName,id:item.deptId});
+          this.deptlist$.push({name:item.deptName,id:item._id});
         }
       }
     })
@@ -83,7 +83,7 @@ export class EmployeeComponent implements OnInit{
     this.empObj = emp;
   }
 
-  onDelete(id:number){
+  onDelete(id:string){
     const isConfirm = window.confirm('Are you sure you want to delete this Employee?');
     if (isConfirm) {
       this.emp.deletEmployee(id).subscribe((res:Api_Response)=>{

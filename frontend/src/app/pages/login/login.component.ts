@@ -21,10 +21,10 @@ export class LoginComponent {
   private router = inject(Router);
   private employee = inject(EmployeeService);
 
-  onLogin(){
+  onLogin() {
     this.employee.login(this.loginObj).subscribe((res:Api_Response)=>{
       if (res.result) {
-        localStorage.setItem('data',JSON.stringify(res.data));
+        localStorage.setItem('user',JSON.stringify(res.data));
         this.router.navigateByUrl('dashboard');
       }
       else{

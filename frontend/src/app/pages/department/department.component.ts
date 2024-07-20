@@ -62,7 +62,7 @@ export class DepartmentComponent implements OnInit {
     });
   }
 
-  deleteDept(deptId:number){
+  deleteDept(deptId:string){
     const isConfirm = window.confirm('Are you sure you want to delete this record?');
     if (isConfirm) {
     this.dept.deleteDept(deptId).subscribe((res: Api_Response) => {

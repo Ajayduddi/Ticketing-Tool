@@ -9,35 +9,39 @@ import { Constant } from '../constant/constant';
   providedIn: 'root',
 })
 export class DepartmentService {
-  
+
   constructor(private http: HttpClient) {}
 
   getDept(): Observable<Api_Response> {
     return this.http.get<Api_Response>(
-      environment.API_URL + Constant.API_ENDPOINTS.GetDepartments
+      environment.API_URL + Constant.API_ENDPOINTS.GetDepartments,
+      { withCredentials: true }
     );
   }
 
   createDept(obj: DepartmentModel): Observable<Api_Response> {
     return this.http.post<Api_Response>(
       environment.API_URL + Constant.API_ENDPOINTS.CreateDepartment,
-      obj
+      obj,
+      { withCredentials: true }
     );
   }
 
   updateDept(obj: DepartmentModel): Observable<Api_Response> {
     return this.http.put<Api_Response>(
-      environment.API_URL + Constant.API_ENDPOINTS.UpdateDepartment,
-      obj
+      environment.API_URL +
+        Constant.API_ENDPOINTS.UpdateDepartment +
+        '/' +
+        obj._id,
+      obj,
+      { withCredentials: true }
     );
   }
 
-  deleteDept(id: number): Observable<Api_Response> {
+  deleteDept(id: string): Observable<Api_Response> {
     return this.http.delete<Api_Response>(
-      environment.API_URL +
-        Constant.API_ENDPOINTS.DeleteDepartment +
-        '?id=' +
-        id
+      environment.API_URL + Constant.API_ENDPOINTS.DeleteDepartment + '/' + id,
+      { withCredentials: true }
     );
   }
 }

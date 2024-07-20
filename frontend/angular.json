@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular18",
+            "outputPath": "dist/Ticketing-Tool",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -79,6 +79,13 @@
             },
             "development": {
               "buildTarget": "Angular18:build:development"
+            },
+            "ssl": {
+              "ssl": true,
+              "sslKey": "C:/laragon/etc/ssl/laragon.key",
+              "sslCert": "C:/laragon/etc/ssl/laragon.crt",
+              "host": "ticket.test",
+              "port": 4200
             }
           },
           "defaultConfiguration": "development"

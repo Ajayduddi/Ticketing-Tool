@@ -18,12 +18,12 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-dept>
                                 <tr>
-                                    <td>{{ dept.deptId  | na }}</td>
+                                    <td>{{ dept._id  | na }}</td>
                                     <td>{{ dept.deptName | na }}</td>
-                                    <td>{{ dept.createdDate | date:'dd-MMM-yyyy' | na }}</td>
+                                    <td>{{ dept.createdate | date:'dd-MMM-yyyy' | na }}</td>
                                     <td>
                                         <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success" (click)="editDept(dept)" ></button>
-                                        <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteDept(dept.deptId)"></button>
+                                        <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteDept(dept._id)"></button>
                                     </td>
                                 </tr>
                             </ng-template>
@@ -41,22 +41,22 @@
             <div class="card-body">
                 <div class="row">
                     <div class="flex flex-column gap-2 col-md-12">
-                        <label for="department_id" *ngIf="deptObj.deptId !== 0">Department Id</label>
-                        <input pInputText id="department_id" [(ngModel)]="deptObj.deptId" *ngIf="deptObj.deptId !== 0" aria-describedby="username-help" type="number" name="department_id" />
+                        <label for="department_id" *ngIf="deptObj._id !== ''">Department Id</label>
+                        <input pInputText id="department_id" [(ngModel)]="deptObj._id" *ngIf="deptObj._id !== ''" aria-describedby="username-help" type="text" name="department_id" [disabled]="true" />
                     </div>
                     <div class="flex flex-column gap-2 col-md-12">
                         <label for="department_name">Department Name</label>
                         <input pInputText id="department_name" [(ngModel)]="deptObj.deptName" aria-describedby="username-help" type="text" name="department_name"/>
                     </div>
                     <div class="flex flex-column gap-2 col-md-12 mt-2">
-                        <label for="date" *ngIf="deptObj.deptId !== 0">Date Of Creation</label>
-                        <input pInputText id="date" [(ngModel)]="deptObj.createdDate " *ngIf="deptObj.deptId !== 0" aria-describedby="username-help" type="text" name="date"/>
+                        <label for="date" *ngIf="deptObj._id !== ''">Date Of Creation</label>
+                        <input pInputText id="date" [(ngModel)]="deptObj.createdate " *ngIf="deptObj._id !== ''" aria-describedby="username-help" type="text" name="date"/>
                     </div>
                 </div>
                 <div class="flex align-item-center justify-content-between mt-3">
                     <p-button severity="secondary" [raised]="true" (onClick)="reset()">Reset</p-button>
-                    <p-button *ngIf="deptObj.deptId == 0" (onClick)="addDept()">Submit</p-button>
-                    <p-button *ngIf="deptObj.deptId !== 0" (onClick)="updateDept()">Update</p-button>
+                    <p-button *ngIf="deptObj._id == ''" (onClick)="addDept()">Submit</p-button>
+                    <p-button *ngIf="deptObj._id !== ''" (onClick)="updateDept()">Update</p-button>
                 </div>
             </div>
         </div>

@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "dev": "ng serve --ssl true --ssl-key C:/laragon/etc/ssl/laragon.key --ssl-cert C:/laragon/etc/ssl/laragon.crt --host ticket.test --port 4200"
   },
   "private": true,
   "dependencies": {

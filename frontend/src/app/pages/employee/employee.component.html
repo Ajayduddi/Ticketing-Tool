@@ -14,7 +14,7 @@
                                         <div class="relative flex gap-3 mx-auto">
                                             <p-avatar icon="pi pi-user" shape="circle" />
                                             <div class="text-lg font-medium text-900 mt-1">
-                                                {{ product.employeeName }}
+                                                {{ product.name }}
                                             </div>
                                         </div>
                                     </div>
@@ -22,9 +22,9 @@
                                         <div class="flex flex-row justify-content-between align-items-start gap-2">
                                             <div>
                                                 <span class="font-medium text-secondary text-sm">{{ "Emp Id: " +
-                                                    product.employeeId }}</span>
+                                                    product._id }}</span>
                                                 <div class="text font-medium text-900 mt-1">
-                                                    {{ product.employeeName }}
+                                                    {{ product.name }}
                                                 </div>
                                             </div>
                                             <div class="p-1 flex flex-column gap-2" style="border-radius: 30px">
@@ -32,7 +32,7 @@
                                                     <div class="pi pi-phone"> {{ product.contactNo }}</div>
                                                 </span>
                                                 <div class="text font-medium text-900 mt-1 pi pi-envelope">
-                                                    {{ product.emailId }}
+                                                    {{ product.email }}
                                                 </div>
                                             </div>
                                         </div>
@@ -58,7 +58,7 @@
                                                     (onClick)="onEdit(product)" />
                                                 <p-button icon="pi pi-times" [rounded]="true" severity="danger"
                                                     [outlined]="true" [text]="true"
-                                                    (onClick)="onDelete(product.employeeId)" />
+                                                    (onClick)="onDelete(product._id)" />
                                             </div>
                                         </div>
                                     </div>
@@ -80,17 +80,17 @@
                     <div class="p-fluid p-formgrid flex flex-wrap">
                         <div class="field col-md-6 col-sm-12">
                             <label htmlFor="name">Name</label>
-                            <input pInputText id="name" [(ngModel)]="empObj.employeeName" type="text"
+                            <input pInputText id="name" [(ngModel)]="empObj.name" type="text"
                                 placeholder="Alex" />
                         </div>
                         <div class="field pl-2 col-md-6 col-sm-12">
                             <label htmlFor="contact_no">Contact No </label>
-                            <input pInputText id="contact_no" [(ngModel)]="empObj.contactNo" type="text"
+                            <input pInputText id="contact_no" [(ngModel)]="empObj.contactNo" type="number"
                                 placeholder="123456789" />
                         </div>
                         <div class="field col-md-12 col-sm-12">
                             <label htmlFor="email">Email</label>
-                            <input pInputText id="email" [(ngModel)]="empObj.emailId" type="email"
+                            <input pInputText id="email" [(ngModel)]="empObj.email" type="email"
                                 placeholder="example@gmail.com" />
                         </div>
                         <div class="field col-md-12 col-sm-12">
@@ -133,8 +133,8 @@
                         </div>
                         <div class="flex align-item-center justify-content-between mx-3 mt-2 col-md-12 col-sm-12">
                             <p-button severity="secondary" [raised]="true">Reset</p-button>
-                            <p-button *ngIf="empObj.employeeId == 0" (onClick)="onSubmit()">Submit</p-button>
-                            <p-button *ngIf="empObj.employeeId !== 0" (onClick)="onUpdate()">Update</p-button>
+                            <p-button *ngIf="empObj._id == ''" (onClick)="onSubmit()">Submit</p-button>
+                            <p-button *ngIf="empObj._id !== ''" (onClick)="onUpdate()">Update</p-button>
                         </div>
                     </div>
                 </div>
