@@ -101,11 +101,6 @@ export const ticketSchema = {
             withMessage: 'CreatedByEmployee is required',
         },
     },
-    assignedToEmployee: {
-        isString: {
-            withMessage: 'Please enter a valid assignedToEmployee',
-        },
-    },
     contactNo: {
         isNumeric: {
             withMessage: 'Please enter a valid contact number',

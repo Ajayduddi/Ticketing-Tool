@@ -16,7 +16,7 @@ const ticketSchema = new mongoose.Schema({
     assignedToEmployee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required: true,
+        default: null,
     },
     contactNo: {
         type: Number,

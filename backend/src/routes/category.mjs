@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { body, validationResult, matchedData } from 'express-validator';
 import { parentCategory } from '../mongoose/schemas/parentCategory.mjs';
 import { childCategory } from '../mongoose/schemas/childCategory.mjs';
+import { generatePCategoryId, generateCategoryId } from '../utils/helper.mjs';
 
 const router = Router();
 
@@ -10,19 +11,19 @@ router.get('/getParentCategories', (req, res) => {
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
 
         if (req.user) {
             try {
                 const getParentCategories = await parentCategory.find();
-                res.status(200).json({ Result: true, message: '', data: getParentCategories });
+                res.status(200).json({ result: true, message: '', data: getParentCategories });
             } catch (error) {
-                res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
             }
         }
         else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -38,23 +39,24 @@ router.post('/createParentCategory', [
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
 
         if (req.user) {
             if (req.user.role === 'superadmin') {
                 try {
+                    data.categoryId = generatePCategoryId();
                     const createParentCategory = new parentCategory(data);
                     const saveParentCategory = await createParentCategory.save();
-                    res.status(201).json({ Result: true, message: 'Parent category created successfully', data: saveParentCategory });
+                    res.status(201).json({ result: true, message: 'Parent category created successfully', data: saveParentCategory });
                 } catch (error) {
-                    res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                    res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
                 }
             } else {
-                res.status(403).json({ Result: false, message: 'you have no permission to access this route', data: null });
+                res.status(403).json({ result: false, message: 'you have no permission to access this route', data: null });
             }
         } else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -71,30 +73,30 @@ router.put('/updateParentCategory/:id', [
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
         if (req.user) {
             if (req.user.role === 'superadmin') {
                 if (!result.isEmpty()) {
-                    res.status(400).json({ Result: false, message: 'Bad Request', data: result });
+                    res.status(400).json({ result: false, message: 'Bad Request', data: result });
                 }
                 else {
                     try {
                         if (await parentCategory.findByIdAndUpdate(id, data)) {
-                            res.status(200).json({ Result: true, message: 'Parent category updated successfully', data: null });
+                            res.status(200).json({ result: true, message: 'Parent category updated successfully', data: null });
                         }
                         else {
-                            res.status(404).json({ Result: false, message: 'parent category is not found', data: null });
+                            res.status(404).json({ result: false, message: 'parent category is not found', data: null });
                         }
                     } catch (error) {
-                        res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                        res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
                     }
                 }
             } else {
-                res.status(403).json({ Result: false, message: 'you have no permission to access this route', data: null });
+                res.status(403).json({ result: false, message: 'you have no permission to access this route', data: null });
             }
         } else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -106,26 +108,26 @@ router.delete('/deleteParentCategory/:id', (req, res) => {
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }   
 
         if (req.user) {
             if (req.user.role === 'superadmin') {
                 try {
                     if (await parentCategory.findByIdAndDelete(id)) {
-                        res.status(200).json({ Result: true, message: 'Parent category deleted successfully', data: null });
+                        res.status(200).json({ result: true, message: 'Parent category deleted successfully', data: null });
                     }
                     else {
-                        res.status(404).json({ Result: false, message: 'Parent category is not found', data: null });
+                        res.status(404).json({ result: false, message: 'Parent category is not found', data: null });
                     }
                 } catch (error) {
-                    res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                    res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
                 }
             } else {
-                res.status(403).json({ Result: false, message: 'you have no permission to access this route', data: null });
+                res.status(403).json({ result: false, message: 'you have no permission to access this route', data: null });
             }
         } else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -136,19 +138,19 @@ router.get('/getChildCategories', (req, res) => {
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
 
         if (req.user) {
             try {
                 const getChildCategories = await childCategory.find();
-                res.status(200).json({ Result: true, message: '', data: getChildCategories });
+                res.status(200).json({ result: true, message: '', data: getChildCategories });
             } catch (error) {
-                res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
             }
         }
         else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -160,24 +162,24 @@ router.get('/getChildCategoryByParentId/:parentId', function (req, res) {
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
 
         if (req.user) {
             try {
                 const getChildCategoryByParentId = await childCategory.find({ parentCategoryId: parentId });
                 if (getChildCategoryByParentId.length > 0) {
-                    res.status(200).json({ Result: true, message: '', data: getChildCategoryByParentId });
+                    res.status(200).json({ result: true, message: '', data: getChildCategoryByParentId });
                 }
                 else {
-                    res.status(404).json({ Result: false, message: 'Child category is not found', data: null });
+                    res.status(404).json({ result: false, message: 'Child category is not found', data: null });
                 }
             } catch (error) {
-                res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
             }
         }
         else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -192,28 +194,29 @@ router.post('/createChildCategory', [
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
 
         if (req.user) {
             if (req.user.role === 'superadmin') {
                 if (result.isEmpty()) {
                     try {
+                        data.categoryId = generateCategoryId();
                         const createChildCategory = new childCategory(data);
                         const saveChildCategory = await createChildCategory.save();
-                        res.status(201).json({ Result: true, message: 'Child category created successfully', data: saveChildCategory });
+                        res.status(201).json({ result: true, message: 'Child category created successfully', data: saveChildCategory });
                     } catch (error) {
-                        res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                        res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
                     }
                 }
                 else {
-                    res.status(400).json({ Result: false, message: 'Bad Request', data: result.array() });  
+                    res.status(400).json({ result: false, message: 'Bad Request', data: result.array() });  
                 }
             } else {
-                res.status(403).json({ Result: false, message: 'you have no permission to access this route', data: null });
+                res.status(403).json({ result: false, message: 'you have no permission to access this route', data: null });
             }
         } else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -229,31 +232,31 @@ router.put('/updateChildCategory/:id', [
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
         if (req.user) {
             if (req.user.role === 'superadmin') {
                 if (!result.isEmpty()) {
-                    res.status(400).json({ Result: false, message: 'Bad Request', data: result });
+                    res.status(400).json({ result: false, message: 'Bad Request', data: result });
                 }
                 else {
                     try {
                         if (await childCategory.findByIdAndUpdate(id, data)) {
-                            res.status(200).json({ Result: true, message: 'Child category updated successfully', data: null });
+                            res.status(200).json({ result: true, message: 'Child category updated successfully', data: null });
                         }
                         else {
-                            res.status(404).json({ Result: false, message: 'Child category is not found', data: null });
+                            res.status(404).json({ result: false, message: 'Child category is not found', data: null });
                         }
                     } catch (error) {
-                        res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                        res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
                     }
                 }
             } else {
-                res.status(403).json({ Result: false, message: 'you have no permission to access this route', data: null });
+                res.status(403).json({ result: false, message: 'you have no permission to access this route', data: null });
             }
         } else {
             req.sessionStore.set(req.sessionID, req.session);   
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
@@ -265,25 +268,25 @@ router.delete('/deleteChildCategory/:id', (req, res) => {
     req.sessionStore.get(req.sessionID, async (error) => {
         console.log(req.sessionID);
         if (error) {
-            res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+            res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
         }
 
         if (req.user) {
             if (req.user.role === 'superadmin') {
                 try {
                     if (await childCategory.findByIdAndDelete(id)) {
-                        res.status(200).json({ Result: true, message: 'Successfully deleted child category', data: id });
+                        res.status(200).json({ result: true, message: 'Successfully deleted child category', data: id });
                     } else {
-                        res.status(404).json({ Result: false, message: 'child category is not found', data: id });
+                        res.status(404).json({ result: false, message: 'child category is not found', data: id });
                     }
                 } catch (error) {
-                    res.status(500).json({ Result: false, message: 'Internal Server Error', data: error });
+                    res.status(500).json({ result: false, message: 'Internal Server Error', data: error });
                 }
             } else {
-                res.status(403).json({ Result: false, message: 'You are not authorized to delete child category', data: id });
+                res.status(403).json({ result: false, message: 'You are not authorized to delete child category', data: id });
             }
         } else {
-            res.status(401).json({ Result: false, message: 'Unauthorized', data: null });
+            res.status(401).json({ result: false, message: 'Unauthorized', data: null });
         }
     });
 });
