@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 const departmentSchema = new mongoose.Schema({
+    deptId: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     deptName: {
         type: String,
         required: true,

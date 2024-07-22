@@ -3,7 +3,7 @@ import { body, checkSchema, matchedData, validationResult } from 'express-valida
 import passport from 'passport';
 import { employeeSchema } from '../utils/validation-schema.mjs';
 import { user } from '../mongoose/schemas/user.mjs';
-import { hashPassword } from '../utils/helper.mjs';
+import { hashPassword, generateUserId } from '../utils/helper.mjs';
 import '../strategies/local-strategy.mjs';
 
 const router = Router();
@@ -45,6 +45,8 @@ router.post('/createEmployee', checkSchema(employeeSchema), async (req, res) => 
                 }).catch((error) => {
                     res.status(500).json({ result: false, message: "Internal Server Error", data: error });
                 });
+
+                data.userId = generateUserId();
 
                 if (await user.findOne({ email: data.email })) {
                     res.status(400).json({ result: false, message: "Email already exists", data: null });
