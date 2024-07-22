@@ -85,8 +85,8 @@
                         </div>
                         <div class="field pl-2 col-md-6 col-sm-12">
                             <label htmlFor="contact_no">Contact No </label>
-                            <input pInputText id="contact_no" [(ngModel)]="empObj.contactNo" type="number"
-                                placeholder="123456789" />
+                            <p-inputNumber id="contact_no" [(ngModel)]="empObj.contactNo" type="number"
+                                placeholder="123456789" [useGrouping]="false"></p-inputNumber>
                         </div>
                         <div class="field col-md-12 col-sm-12">
                             <label htmlFor="email">Email</label>
@@ -100,8 +100,8 @@
                         </div>
                         <div class="field col-md-6 col-sm-12">
                             <label htmlFor="role">Role</label>
-                            <p-dropdown id="role" [(ngModel)]="empObj.role" optionLabel="name" placeholder="Select Role"
-                                [options]="roles$"></p-dropdown>
+                            <p-dropdown id="role" [(ngModel)]="empObj.role" optionLabel="name" optionValue="name" placeholder="Select Role"
+                                [options]="roles$" ></p-dropdown>
                         </div>
                         <div class="field col-md-6 col-sm-12">
                             <label htmlFor="gender">Gender</label>
@@ -126,13 +126,13 @@
                         </div>
                         <div class="field col-md-12 col-sm-12">
                             <label htmlFor="department">Department</label>
-                            <p-dropdown id="department" [(ngModel)]="empObj.deptId" placeholder="Select Department"
+                            <p-dropdown id="department" [(ngModel)]="empObj.deptId"  placeholder="Select Department"
                                 optionLabel="name" optionValue="id" [filter]="true" filterBy="name"
                                 [options]="deptlist$">
                             </p-dropdown>
                         </div>
                         <div class="flex align-item-center justify-content-between mx-3 mt-2 col-md-12 col-sm-12">
-                            <p-button severity="secondary" [raised]="true">Reset</p-button>
+                            <p-button severity="secondary" [raised]="true" (onClick)="reset()">Reset</p-button>
                             <p-button *ngIf="empObj._id == ''" (onClick)="onSubmit()">Submit</p-button>
                             <p-button *ngIf="empObj._id !== ''" (onClick)="onUpdate()">Update</p-button>
                         </div>

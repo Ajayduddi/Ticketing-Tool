@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  API_URL: 'https://ticketing-tool-nu.vercel.app/api/',
+  API_URL: 'http://localhost:4000/api/',
 };

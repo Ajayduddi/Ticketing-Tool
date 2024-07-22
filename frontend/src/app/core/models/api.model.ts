@@ -97,25 +97,25 @@ export class DepartmentModel {
 }
 
 export class ParentCategoryModel {
-  categoryId: number;
+  _id: string;
   categoryName: string;
-  deptId: number;
+  deptId: string;
 
   constructor() {
-    this.categoryId = 0;
+    this._id = '';
     this.categoryName = '';
-    this.deptId = 0;
+    this.deptId = '';
   }
 }
 
 export class ChildcaregoryModel {
-  childCategoryId: number;
-  CategoryName: string;
-  parentCategoryId: number;
+  _id: string;
+  categoryName: string;
+  parentCategoryId: string;
 
   constructor() {
-    this.childCategoryId = 0;
-    this.CategoryName = '';
-    this.parentCategoryId = 0;
+    this._id = '';
+    this.categoryName = '';
+    this.parentCategoryId = '';
   }
 }

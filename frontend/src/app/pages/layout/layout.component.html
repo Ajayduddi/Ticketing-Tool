@@ -122,11 +122,11 @@
                                                     <span class="font-medium">Dashboard</span>
                                                 </a>
                                             </li>
-                                            <li>
+                                            <li *ngIf="data.role === 'superadmin'">
                                                 <a pRipple (click)="sidebarVisible = false"
                                                     class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple link-underline link-underline-opacity-0"
                                                     routerLink="department">
-                                                    <i class="pi pi-bookmark mr-2"></i>
+                                                    <i class="pi pi-building mr-2"></i>
                                                     <span class="font-medium">Departments</span>
                                                 </a>
                                             </li>
@@ -177,7 +177,7 @@
                                                 </li>
                                             </ul>
                                         </li> -->
-                                            <li>
+                                            <li *ngIf="data.role === 'superadmin'">
                                                 <a pRipple (click)="sidebarVisible = false"
                                                     class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple link-underline link-underline-opacity-0"
                                                     routerLink="employee">
@@ -196,10 +196,17 @@
                                             </a>
                                         </li> -->
                                         <li>
-                                            <a pRipple
+                                            <a pRipple (click)="sidebarVisible = false" routerLink="parent-category"
                                                 class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple link-underline link-underline-opacity-0">
-                                                <i class="pi pi-calendar mr-2"></i>
-                                                <span class="font-medium">Calendar</span>
+                                                <i class="pi pi-tag mr-2"></i>
+                                                <span class="font-medium">Parent Category</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a pRipple (click)="sidebarVisible = false" routerLink="child-category"
+                                                class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple link-underline link-underline-opacity-0">
+                                                <i class="pi pi-tags mr-2"></i>
+                                                <span class="font-medium">Child Category</span>
                                             </a>
                                         </li>
                                         <!-- <li>
@@ -306,7 +313,7 @@
             <li class="nav-item dropdown flex align-items-center">
                 <p-avatar icon="pi pi-user" class="d-none d-sm-block" shape="circle" />
                 <button class="btn btn-dark dropdown-toggle ml-auto d-none d-sm-block" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{name}}
+                    {{data.name}}
                 </button>
                 <button class="btn btn-dark dropdown-toggle d-sm-none" data-bs-toggle="dropdown" aria-expanded="false" id="logout"></button>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-xxl-start" aria-labelledby="logout">

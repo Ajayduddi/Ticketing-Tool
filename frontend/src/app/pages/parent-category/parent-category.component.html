@@ -1,1 +1,82 @@
-<p>parent-category works!</p>
+<div class="row flex-wrap">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-center bg-primary">
+                <h5>Parent Category List</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <p-table [value]="pcategoryList">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Category Name</th>
+                                    <th>Department</th>
+                                    <!-- <th>Created at</th> -->
+                                    <th>Action</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-pcategories>
+                                <tr>
+                                    <td>{{ pcategories._id | na }}</td>
+                                    <td>{{ pcategories.categoryName | na }}</td>
+                                    @for (dept of deptList; track $index) {
+                                        @if (dept.id === pcategories.deptId) {    
+                                            <td>{{ dept.name | na }}</td>
+                                        }
+                                    }
+                                    <!-- <td>{{ dept.createdate | date:'dd-MMM-yyyy' | na }}</td> -->
+                                    <td>
+                                        <button pButton type="button" icon="pi pi-pencil"
+                                            class="p-button-rounded p-button-success" (click)="editPcategory(pcategories)"></button>
+                                        <button pButton type="button" icon="pi pi-trash"
+                                            class="p-button-rounded p-button-danger"
+                                            (click)="deletePcategory(pcategories._id)"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-center bg-primary">
+                <h5>New Category</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="flex flex-column gap-2 col-md-12">
+                        <label for="p-category_id" *ngIf="categoryObj._id !== ''">Category Id</label>
+                        <input pInputText id="p-category_id" [(ngModel)]="categoryObj._id" *ngIf="categoryObj._id !== ''"
+                            aria-describedby="username-help" type="text" name="p-category_id" [disabled]="true" />
+                    </div>
+                    <div class="flex flex-column gap-2 col-md-12">
+                        <label for="p-category_name">Category Name</label>
+                        <input pInputText id="p-category_name" [(ngModel)]="categoryObj.categoryName"
+                            aria-describedby="username-help" type="text" name="p-category_name" />
+                    </div>
+                    <div class="flex flex-column gap-2 col-md-12 ">
+                        <label for="department">Department</label>
+                        <p-dropdown id="department" [(ngModel)]="categoryObj.deptId" placeholder="Select Department" optionLabel="name"
+                            optionValue="id" [filter]="true" filterBy="name" [options]="deptList">
+                        </p-dropdown>
+                    </div>
+                    <!-- <div class="flex flex-column gap-2 col-md-12 mt-2">
+                        <label for="date" *ngIf="deptObj._id !== ''">Date Of Creation</label>
+                        <input pInputText id="date" [(ngModel)]="deptObj.createdate " *ngIf="deptObj._id !== ''"
+                            aria-describedby="username-help" type="text" name="date" [disabled]="true" />
+                    </div> -->
+                </div>
+                <div class="flex align-item-center justify-content-between mt-3">
+                    <p-button severity="secondary" [raised]="true" (onClick)="reset()">Reset</p-button>
+                    <p-button *ngIf="categoryObj._id == ''" (onClick)="addPcategory()">Submit</p-button>
+                    <p-button *ngIf="categoryObj._id !== ''" (onClick)="updatePcategory()">Update</p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

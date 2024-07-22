@@ -50,7 +50,7 @@
                     </div>
                     <div class="flex flex-column gap-2 col-md-12 mt-2">
                         <label for="date" *ngIf="deptObj._id !== ''">Date Of Creation</label>
-                        <input pInputText id="date" [(ngModel)]="deptObj.createdate " *ngIf="deptObj._id !== ''" aria-describedby="username-help" type="text" name="date"/>
+                        <input pInputText id="date" [(ngModel)]="deptObj.createdate " *ngIf="deptObj._id !== ''" aria-describedby="username-help" type="text" name="date" [disabled]="true"/>
                     </div>
                 </div>
                 <div class="flex align-item-center justify-content-between mt-3">

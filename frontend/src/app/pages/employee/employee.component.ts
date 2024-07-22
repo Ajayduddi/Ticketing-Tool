@@ -12,17 +12,18 @@ import { DepartmentService } from '../../core/services/department.service';
 import { NaPipe } from '../../shared/pipes/na.pipe';
 import { DataViewModule } from 'primeng/dataview';
 import { AvatarModule } from 'primeng/avatar';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-employee',
   standalone: true,
-  imports: [CommonModule,ButtonModule,FormsModule,InputTextModule,DropdownModule,RadioButtonModule,NaPipe,DataViewModule,AvatarModule],
+  imports: [CommonModule,ButtonModule,FormsModule,InputTextModule,InputNumberModule,DropdownModule,RadioButtonModule,NaPipe,DataViewModule,AvatarModule],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
 })
 export class EmployeeComponent implements OnInit{
   empObj: EmployeeModel = new EmployeeModel();
-  deptlist$:{name:string, id:string}[] = []; //Observable<DepartmentModel[]> = inject(DepartmentService).getDept();
+  deptlist$:{id:string, name:string}[] = []; //Observable<DepartmentModel[]> = inject(DepartmentService).getDept();
   roles$: {name:string}[] = [];
   empList$: EmployeeModel[] = [];
 
@@ -35,12 +36,17 @@ export class EmployeeComponent implements OnInit{
     this.getemployees();
   }
 
+  reset(){
+    this.empObj = new EmployeeModel();
+  }
+
   getDept(){
     this.dept.getDept().subscribe((res:Api_Response) => {
       if(res.result){
         for (let item of res.data) {
-          this.deptlist$.push({name:item.deptName,id:item._id});
+          this.deptlist$.push({ id: item._id, name: item.deptName });
         }
+        console.log(this.deptlist$);
       }
     })
   }
@@ -60,6 +66,7 @@ export class EmployeeComponent implements OnInit{
     this.emp.getEmployees().subscribe((res:Api_Response) => {
       if(res.result){
         this.empList$ = res.data;
+        console.log(this.empList$);
       }
       else{
         alert(res.message);

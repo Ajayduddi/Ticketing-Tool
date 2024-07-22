@@ -38,8 +38,7 @@ export class LayoutComponent implements OnInit {
   sidebarVisible: boolean = false;
   items: MenuItem[] | undefined;
 
-  data = localStorage.getItem('user') || '';
-  name: string = '';
+  data:any = JSON.parse(localStorage.getItem('user') || '');
 
   router = inject(Router);
 
@@ -60,7 +59,7 @@ export class LayoutComponent implements OnInit {
     this.sidebarRef.close(e);
   }
   logout() {
-    localStorage.removeItem('data');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 }
