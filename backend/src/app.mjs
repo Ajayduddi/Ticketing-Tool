@@ -23,8 +23,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:4200",
+      "https://ajayduddi.github.io/Ticketing-Tool/",
       "https://ticket.test:4200/",
-      "https://browser.test/",
     ],
     credentials: true,
     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
