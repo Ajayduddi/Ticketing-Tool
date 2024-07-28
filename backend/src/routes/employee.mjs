@@ -80,12 +80,8 @@ router.get('/getEmployees', (req, res) => {
         }
 
         if (req.user) {
-            if (req.user.role === 'superadmin') {
                 const employees = await user.find();
                 res.status(200).json({ result: true, message: "Employee fetched successfully", data: employees });
-            } else {
-                res.status(403).json({ result: false, message: "You are not authorized to perform this action", data: null });
-            }
         } else {
             res.status(401).json({ result: false, message: "unauthorized", data: null });
         }
