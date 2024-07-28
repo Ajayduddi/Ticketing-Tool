@@ -1,64 +1,73 @@
-<div class="row flex-wrap">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header d-flex justify-content-center bg-primary">
-                <h5>Department List</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <p-table [value]="deptList">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th>Department Id</th>
-                                    <th>Department Name</th>
-                                    <th>Created at</th>
-                                    <th>Action</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-dept>
-                                <tr>
-                                    <td>{{ dept._id  | na }}</td>
-                                    <td>{{ dept.deptName | na }}</td>
-                                    <td>{{ dept.createdate | date:'dd-MMM-yyyy' | na }}</td>
-                                    <td>
-                                        <button pButton type="button" icon="pi pi-pencil" class="p-button-rounded p-button-success" (click)="editDept(dept)" ></button>
-                                        <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteDept(dept._id)"></button>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
+<main>
+    <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"/>
+    <p-confirmDialog />
+    <div class="col-md-12 flex flex-row align-item-center justify-content-between">
+        <div class="flex flex-column gap-2">
+            <span class="text-900 font-medium text-3xl">Departments</span>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard"
+                        class="text-decoration-none text-900 font-medium">Home</a>
+                </li>
+                <li class="breadcrumb-item"><a routerLink="/department" class="text-decoration-none text-900 font-medium">Departments</a></li>
+                <li class="breadcrumb-item active" aria-current="page">List</li>
+            </ol>
+        </div>
+        <div class="flex flex-row gap-2 mt-4">
+            <p-button class="d-none d-sm-none d-md-block" label="Add Department" icon="pi pi-plus" [raised]="true" (onClick)="newDept()"></p-button>
+            <p-button class="d-md-none d-sm-block" icon="pi pi-plus" [raised]="true" (onClick)="newDept()"></p-button>
+            <p-dialog header="Dpeartment" [modal]="true" [(visible)]="isvisable" [style]="{ width: '50rem' }" draggable="false">
+                <span class="p-text-secondary block mb-5" *ngIf="deptObj._id !== ''">Update Dpertment Information.</span>
+                <span class="p-text-secondary block mb-5" *ngIf="deptObj._id === ''">Add Dpertment Information.</span>
+                <div class="flex align-items-center gap-3 mb-3 " *ngIf="deptObj._id !== ''">
+                    <label for="department_id" class="font-semibold w-6rem">Department Id</label>
+                    <input pInputText id="department_id" class="flex-auto"  name="department_id" [(ngModel)]="deptObj.deptId"  [disabled]="true" />
                 </div>
+                <div class="flex align-items-center gap-3 mb-5">
+                    <label for="department_name" class="font-semibold w-6rem">Department Name</label>
+                    <input pInputText id="department_name" class="flex-auto" type="text" name="department_name" [(ngModel)]="deptObj.deptName" ngModel required #name="ngModel"/>
+                    <small *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">Department Name is required</small>
+                </div>
+                <div class="flex align-items-center gap-3 mb-5" *ngIf="deptObj._id !== ''">
+                    <label for="department_date" class="font-semibold w-6rem">Create Date</label>
+                    <input pInputText id="department_date" class="flex-auto" name="department_date" [(ngModel)]="deptObj.createdate" [disabled]="true" />
+                </div>
+                <div class="flex justify-content-end gap-2">
+                    <p-button label="Reset" severity="secondary" (onClick)="reset()" />
+                    <p-button label="Save" (onClick)="addDept()" *ngIf="deptObj._id === ''" [disabled]="name.invalid"></p-button>
+                    <p-button label="Update" (onClick)="updateDept()" *ngIf="deptObj._id !== ''" [disabled]="name.invalid" />
+                </div>
+            </p-dialog>
+        </div>
+    </div>
+    <div class="col-md-12" >
+        <div class="row">
+            <div class="col-12 d-print-none">
+                <p-table [value]="deptList" styleClass="p-datatable" [paginator]="true" [first]="0" [showCurrentPageReport]="true" [rows]="10" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 15, 20, 30]" >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>S.NO</th>
+                            <th pSortableColumn="deptId" feild="deptId">Department Id <p-sortIcon field="deptId" /></th>
+                            <th pSortableColumn="deptName" feild="deptName">Department Name <p-sortIcon field="deptName" /></th>
+                            <th pSortableColumn="createdate" feild="createdate">Created at <p-sortIcon field="createdate" /></th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-dept let-rowIndex="rowIndex">
+                        <tr>
+                            <td>{{ rowIndex + 1 }}</td>
+                            <td>{{ dept.deptId | na }}</td>
+                            <td>{{ dept.deptName | na }}</td>
+                            <td>{{ dept.createdate | date:'dd-MMM-yyyy' | na }}</td>
+                            <td>
+                                <button pButton type="button" icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-secondary" [text]="true" (click)="editDept(dept)"></button>
+                                <button pButton type="button" icon="pi pi-trash"
+                                    class="p-button-rounded p-button-danger" [text]="true" (click)="deleteDept(dept._id,$event)"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header d-flex justify-content-center bg-primary">
-                <h5>New Department</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="flex flex-column gap-2 col-md-12">
-                        <label for="department_id" *ngIf="deptObj._id !== ''">Department Id</label>
-                        <input pInputText id="department_id" [(ngModel)]="deptObj._id" *ngIf="deptObj._id !== ''" aria-describedby="username-help" type="text" name="department_id" [disabled]="true" />
-                    </div>
-                    <div class="flex flex-column gap-2 col-md-12">
-                        <label for="department_name">Department Name</label>
-                        <input pInputText id="department_name" [(ngModel)]="deptObj.deptName" aria-describedby="username-help" type="text" name="department_name"/>
-                    </div>
-                    <div class="flex flex-column gap-2 col-md-12 mt-2">
-                        <label for="date" *ngIf="deptObj._id !== ''">Date Of Creation</label>
-                        <input pInputText id="date" [(ngModel)]="deptObj.createdate " *ngIf="deptObj._id !== ''" aria-describedby="username-help" type="text" name="date" [disabled]="true"/>
-                    </div>
-                </div>
-                <div class="flex align-item-center justify-content-between mt-3">
-                    <p-button severity="secondary" [raised]="true" (onClick)="reset()">Reset</p-button>
-                    <p-button *ngIf="deptObj._id == ''" (onClick)="addDept()">Submit</p-button>
-                    <p-button *ngIf="deptObj._id !== ''" (onClick)="updateDept()">Update</p-button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</main>

@@ -16,6 +16,7 @@ export class LoginModel {
 
 export class EmployeeModel {
   _id: string;
+  userId: string;
   name: string;
   contactNo: number;
   email: string;
@@ -27,6 +28,7 @@ export class EmployeeModel {
 
   constructor() {
     this._id = '';
+    this.userId = '';
     this.name = '';
     this.contactNo = 0;
     this.email = '';
@@ -35,18 +37,6 @@ export class EmployeeModel {
     this.gender = '';
     this.role = '';
     this.status = 'Active';
-  }
-}
-
-export class RequestByFilterModel {
-  ticketNo: string;
-  employeeId: number;
-  assignedTo: number;
-
-  constructor() {
-    this.ticketNo = '';
-    this.employeeId = 0;
-    this.assignedTo = 0;
   }
 }
 
@@ -86,11 +76,13 @@ export class TicketModel {
 
 export class DepartmentModel {
   _id: string;
+  deptId: string;
   deptName: string;
   createdate: Date;
 
   constructor() {
     this._id = '';
+    this.deptId = '';
     this.deptName = '';
     this.createdate = new Date();
   }
@@ -98,11 +90,13 @@ export class DepartmentModel {
 
 export class ParentCategoryModel {
   _id: string;
+  categoryId: string;
   categoryName: string;
   deptId: string;
 
   constructor() {
     this._id = '';
+    this.categoryId = '';
     this.categoryName = '';
     this.deptId = '';
   }
@@ -110,11 +104,13 @@ export class ParentCategoryModel {
 
 export class ChildcaregoryModel {
   _id: string;
+  categoryId: string;
   categoryName: string;
   parentCategoryId: string;
 
   constructor() {
     this._id = '';
+    this.categoryId = '';
     this.categoryName = '';
     this.parentCategoryId = '';
   }

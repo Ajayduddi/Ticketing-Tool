@@ -1,0 +1,40 @@
+#gender{
+    padding-left: 2rem ;
+    align-content: center;
+}
+
+.sub-user-card .surface-50{
+    background-color:rgba(211, 211, 211, 0.256) !important;
+}
+
+.sub-user-card:hover {
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 767px) {
+    .user-card {
+        width: 100% !important;
+    }
+
+    .p-fluid .field{
+        width: 100% !important;
+    }
+
+    #gender{
+        padding-left: 0rem !important;
+    }
+}
+
+@media (max-width: 575px) {
+    .user-card {
+        width: 100% !important;
+    }
+
+    .p-fluid .field{
+        width: 100% !important;
+    }
+
+    #gender{
+        padding-left: 0rem !important;
+    }
+}

@@ -29,5 +29,19 @@ export const Constant = {
     CreateChildCategory: 'createChildCategory',
     UpdateChildCategory: 'updateChildCategory',
     DeleteChildCategory: 'deleteChildCategory',
+
+    // ticket
+    GetAllTickets: 'getAllTickets',
+    GetTicketById: 'getTicketById',
+    GetCreatedTicketsByEmpId: 'getCreatedTicketsByEmpId',
+    GetAssignedTicketsByEmpId: 'getAssignedTicketsByEmpId',
+    CreateTicket: 'createTicket',
+    AssignTicket: 'assignTicket',
+    StartTicket: 'startTicket',
+    CloseTicket: 'closeTicket',
+    DeleteTicket: 'deleteTicket',
+
+    //dashboard
+    Dashboard : 'dashboard',
   },
 };

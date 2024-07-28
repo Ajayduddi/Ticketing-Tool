@@ -38,7 +38,7 @@ export class LayoutComponent implements OnInit {
   sidebarVisible: boolean = false;
   items: MenuItem[] | undefined;
 
-  data:any = JSON.parse(localStorage.getItem('user') || '');
+  data:EmployeeModel = JSON.parse(localStorage.getItem('user') || '');
 
   router = inject(Router);
 

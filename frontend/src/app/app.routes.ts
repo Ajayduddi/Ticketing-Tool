@@ -7,6 +7,8 @@ import { EmployeeComponent } from './pages/employee/employee.component';
 import { DepartmentComponent } from './pages/department/department.component';
 import { ParentCategoryComponent } from './pages/parent-category/parent-category.component';
 import { ChildCategoryComponent } from './pages/child-category/child-category.component';
+import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
+import { NewTicketComponent } from './pages/new-ticket/new-ticket.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +44,14 @@ export const routes: Routes = [
       {
         path: 'child-category',
         component: ChildCategoryComponent
+      },
+      {
+        path: 'tickets',
+        component:TicketListComponent
+      },
+      {
+        path: 'new-ticket',
+        component: NewTicketComponent
       }
     ],
   },

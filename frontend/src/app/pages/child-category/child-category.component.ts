@@ -8,24 +8,37 @@ import { DropdownModule } from 'primeng/dropdown';
 import { Api_Response, ChildcaregoryModel, } from '../../core/models/api.model';
 import { CategoryService } from '../../core/services/category.service';
 import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-child-category',
   standalone: true,
-  imports: [CommonModule, ButtonModule, InputTextModule, NaPipe, TableModule, DropdownModule, FormsModule],
+  imports: [CommonModule, ButtonModule, InputTextModule, NaPipe, TableModule, DropdownModule, FormsModule, ToastModule, ConfirmDialogModule, DialogModule],
   templateUrl: './child-category.component.html',
   styleUrl: './child-category.component.css',
+  providers: [MessageService, ConfirmationService],
 })
 export class ChildCategoryComponent implements OnInit{
   pcategoryList: { id: string; name: string }[] = [];
   categoryList: ChildcaregoryModel[] = [];
   categoryObj: ChildcaregoryModel = new ChildcaregoryModel();
+  isvisable: boolean = false;
 
   category = inject(CategoryService);
+  message = inject(MessageService);
+  confirm = inject(ConfirmationService);
 
   ngOnInit(): void {
     this.getPCategory();
     this.getCategory();
+  }
+
+  newCategory() {
+    this.categoryObj = new ChildcaregoryModel();
+    this.isvisable = true;
   }
 
   reset() {
@@ -35,9 +48,7 @@ export class ChildCategoryComponent implements OnInit{
   getPCategory() {
     this.category.getParentCategories().subscribe((res: Api_Response) => {
       if (res.result) {
-        for (let data of res.data) {
-          this.pcategoryList.push({ id: data._id, name: data.categoryName });
-        }
+        this.pcategoryList = res.data.map((data:{_id: string; categoryName: string; }) => ({ id: data._id, name: data.categoryName }));
       } else {
         console.log(res.message);
       }
@@ -56,43 +67,70 @@ export class ChildCategoryComponent implements OnInit{
 
   addCategory() {
     this.category.createChildCategory(this.categoryObj).subscribe((res: Api_Response) => {
-        if (res.result) {
-          alert('Child Category Added Successfully');
+      if (res.result) {
+          this.message.add({
+            severity: 'success',
+            summary: 'success',
+            detail: 'Child Category Added Successfully',
+          });
+          this.isvisable = false;
           this.getCategory();
         } else {
-          alert(res.message);
+         this.message.add({ severity: 'error',summary: 'error', detail: res.message });
         }
       });
   }
 
   editCategory(category: ChildcaregoryModel) {
+    this.isvisable = true;
     this.categoryObj = category;
   }
 
   updateCategory() {
     this.category.updateChildCategory(this.categoryObj).subscribe((res: Api_Response) => {
         if (res.result) {
-          alert('Child Category Updated Successfully');
+          this.message.add({
+            severity: 'success',
+            summary: 'success',
+            detail: 'Child Category Updated Successfully',
+          });
+          this.isvisable = false;
           this.getCategory();
         } else {
-          alert(res.message);
+          this.message.add({ severity: 'error',summary: 'error', detail: res.message });
         }
       });
   }
 
   deleteCategory(id: string) {
-    const isConfirm = window.confirm(
-      'Are you sure you want to delete this Category?'
-    );
-    if (isConfirm) {
-      this.category.deleteChildCategory(id).subscribe((res: Api_Response) => {
-        if (res.result) {
-          alert('Category Deleted Successfully');
-          this.getCategory();
-        } else {
-          alert(res.message);
-        }
-      });
-    }
+    this.confirm.confirm({
+      message: 'Are you sure you want to delete this Category?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this.category.deleteChildCategory(id).subscribe((res: Api_Response) => {
+          if (res.result) {
+            this.message.add({
+              severity: 'success',
+              summary: 'success',
+              detail: 'Category Deleted Successfully',
+            });
+            this.getCategory();
+          } else {
+            this.message.add({
+              severity: 'error',
+              summary: 'error',
+              detail: res.message,
+            });
+          }
+        });
+      },
+      reject: () => {
+        this.message.add({ severity: 'info',summary: 'info', detail: 'Delete cancelled' });
+      },
+    });
   }
 }
