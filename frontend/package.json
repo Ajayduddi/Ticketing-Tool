@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration production",
     "test": "ng test",
     "dev": "ng serve --ssl true --ssl-key C:/laragon/etc/ssl/laragon.key --ssl-cert C:/laragon/etc/ssl/laragon.crt --host ticket.test --port 4200"
   },
