@@ -25,8 +25,6 @@ app.use(
     credentials: true,
     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
     accessControlAllowOrigin: "*",
-    allowedHeaders: '*',
-  
   })
 );
 
@@ -40,7 +38,6 @@ app.use(session({
     httpOnly: true,
     secure: true, // set to true if you only serve the app over https
     sameSite: 'None',
-    domain: "https://ajayduddi.github.io"
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
