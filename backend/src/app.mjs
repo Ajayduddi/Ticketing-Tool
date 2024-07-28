@@ -21,13 +21,12 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 // cors setup
 app.use(
   cors({
-    origin: [
-      "https://ajayduddi.github.io/",
-      "https://ticket.test:4200/",
-    ],
+    origin: "https://ajayduddi.github.io/",
     credentials: true,
     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
     accessControlAllowOrigin: "*",
+    allowedHeaders: "*",
+    
   })
 );
 
