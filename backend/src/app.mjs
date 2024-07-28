@@ -22,7 +22,6 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 app.use(
   cors({
     origin: [
-      "http://localhost:4200",
       "https://ajayduddi.github.io/Ticketing-Tool/",
       "https://ticket.test:4200/",
     ],
@@ -39,7 +38,7 @@ app.use(session({
   cookie: {
     maxAge: 1 * 24 * 60 * 60 * 1000,// 1 day
     httpOnly: true,
-    secure: false, // set to true if you only serve the app over https
+    secure: true, // set to true if you only serve the app over https
     sameSite: 'None',
   },
   store: mongoStore.create({
