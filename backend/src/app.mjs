@@ -1,5 +1,4 @@
 import express from "express";
-import cors from 'cors';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import mongoStore from 'connect-mongo';
@@ -20,23 +19,6 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 });
 
 // cors setup
-app.use(cors({
-  origin: (origin, callback) => {
-    if (process.env.NODE_ENV === 'development') {
-      callback(null, true);
-    } else {
-      const allowedOrigins = ['https://ajayduddi.github.io'];
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }
-  },
-  credentials: true,
-  maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
-  allowedHeaders: '*',
-}));
 app.use(
   cors({
     origin: "https://ajayduddi.github.io",
@@ -56,7 +38,7 @@ app.use(session({
   cookie: {
     maxAge: 1 * 24 * 60 * 60 * 1000,// 1 day
     httpOnly: true,
-    secure: 'auto', // set to true if you only serve the app over https
+    secure: true, // set to true if you only serve the app over https
     sameSite: 'None',
     domain: "https://ajayduddi.github.io"
   },
@@ -95,4 +77,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Server is listening on port http://localhost:${port}`);
 });
-
