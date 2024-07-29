@@ -18,27 +18,35 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log(err);
 });
 
-// cors setup
+// Setup CORS
 app.use(
   cors({
     origin: "https://ajayduddi.github.io",
     credentials: true,
-    maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
-    accessControlAllowOrigin: "*",
+    maxAge: 1 * 24 * 60 * 60, // 1 day
   })
 );
 
-// session setup
+// Add custom CORS headers (if necessary)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+// Session Setup
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
-    maxAge: 1 * 24 * 60 * 60 * 1000,// 1 day
+    maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
     httpOnly: true,
-    secure: false, // set to true if you only serve the app over https
-    sameSite: 'Lax',
-    // domain: "https://ajayduddi.github.io",
+    secure: true, // Set to true if you only serve the app over HTTPS
+    sameSite: 'None', // Ensure cookies are sent with cross-site requests
+    domain: "ajayduddi.github.io", // Domain without the protocol
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
@@ -47,7 +55,7 @@ app.use(session({
       secret: process.env.SESSION_SECRET,
     },
   })
-}))
+}));
 
 // passport setup
 app.use(passport.initialize());
