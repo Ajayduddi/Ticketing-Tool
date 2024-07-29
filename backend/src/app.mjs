@@ -46,7 +46,7 @@ app.use(session({
     httpOnly: true,
     secure: true, // Set to true if you only serve the app over HTTPS
     sameSite: 'None', // Ensure cookies are sent with cross-site requests
-    domain: "ajayduddi.github.io", // Domain without the protocol
+    // domain: "ajayduddi.github.io", // Domain without the protocol
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
