@@ -30,7 +30,7 @@ app.use(
 
 // Add custom CORS headers (if necessary)
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', '*');
