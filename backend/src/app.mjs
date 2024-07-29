@@ -55,8 +55,8 @@ app.use(session({
   cookie: {
     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
     httpOnly: true,
-    // sameSite: 'None', // Ensure cookies are sent with cross-site requests
-    // secure: false, // Set to true if you only serve the app over HTTPS
+    sameSite: 'None', // Ensure cookies are sent with cross-site requests
+    secure: false, // Set to true if you only serve the app over HTTPS
     // domain: ".github.io", // Domain without the protocol
     Path: "/",
   },
