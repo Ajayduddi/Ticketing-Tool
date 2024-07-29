@@ -37,14 +37,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Handle preflight requests
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers'); // Allow all headers
-  res.sendStatus(204);
-});
+// // Handle preflight requests
+// app.options('*', (req, res) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers'); // Allow all headers
+//   res.sendStatus(204);
+// });
 
 
 // Session Setup
