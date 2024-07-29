@@ -17,31 +17,31 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 }).catch((err) => {
   console.log(err);
 });
-
-// Setup CORS
-app.use(
-  cors({
-    origin: "https://ajayduddi.github.io",
-    credentials: true,
-    maxAge: 1 * 24 * 60 * 60, // 1 day,
-  })
-);
+ 
+// set-up cors
+app.use(cors({
+  origin: 'https://ajayduddi.github.io',
+  credentials: true,
+  maxAge: 1 * 24 * 60 * 60, // 1 day
+}));
+ 
 
 // Add custom CORS headers (if necessary)
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers','Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers');
   next();
 });
 
-// Handle preflight requests
+
+// handle preflight requests
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content - Type, Authorization, Content - Length, X - Requested - With, Accept, Origin, Host, Connection, Access - Control - Request - Method, Access - Control - Request - Headers'); // Allow all headers
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers');
   res.sendStatus(204);
 });
 
@@ -54,19 +54,16 @@ app.use(session({
   cookie: {
     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
     httpOnly: true,
-    sameSite: 'None', // Ensure cookies are sent with cross-site requests
-    secure: true, // Set to true if you only serve the app over HTTPS
-    // domain: ".github.io", // Domain without the protocol
-    Path: "/",
+    secure: true, // Ensure secure cookies if using HTTPS
+    sameSite: 'none',
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
     collection: 'sessions',
-    crypto: {
-      secret: process.env.SESSION_SECRET,
-    },
-  })
+    secret: process.env.SESSION_SECRET,
+  }),
 }));
+
 
 // passport setup
 app.use(passport.initialize());
