@@ -24,7 +24,6 @@ app.use(
     origin: "https://ajayduddi.github.io",
     credentials: true,
     maxAge: 1 * 24 * 60 * 60, // 1 day,
-    allowedHeaders: '*',
   })
 );
 
@@ -32,19 +31,19 @@ app.use(
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers','Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers');
   next();
 });
 
-// // Handle preflight requests
-// app.options('*', (req, res) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Host, Connection, Access-Control-Request-Method, Access-Control-Request-Headers'); // Allow all headers
-//   res.sendStatus(204);
-// });
+// Handle preflight requests
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content - Type, Authorization, Content - Length, X - Requested - With, Accept, Origin, Host, Connection, Access - Control - Request - Method, Access - Control - Request - Headers'); // Allow all headers
+  res.sendStatus(204);
+});
 
 
 // Session Setup
