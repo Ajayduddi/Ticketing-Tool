@@ -38,7 +38,7 @@ app.use(session({
     httpOnly: true,
     secure: false, // set to true if you only serve the app over https
     sameSite: 'Lax',
-    domain: "https://ajayduddi.github.io",
+    // domain: "https://ajayduddi.github.io",
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
