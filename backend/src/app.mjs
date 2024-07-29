@@ -44,9 +44,9 @@ app.use(session({
   cookie: {
     maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
     httpOnly: true,
-    secure: false, // Set to true if you only serve the app over HTTPS
-    sameSite: 'Lax', // Ensure cookies are sent with cross-site requests
-    // domain: "ajayduddi.github.io", // Domain without the protocol
+    secure: true, // Set to true if you only serve the app over HTTPS
+    sameSite: 'None', // Ensure cookies are sent with cross-site requests
+    domain: "ajayduddi.github.io", // Domain without the protocol
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
