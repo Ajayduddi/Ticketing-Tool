@@ -24,17 +24,26 @@ app.use(
     origin: "https://ajayduddi.github.io",
     credentials: true,
     maxAge: 1 * 24 * 60 * 60, // 1 day,
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization','Set-Cookie'],
+    allowedHeaders: '*',
   })
 );
 
-// Add custom CORS headers (if necessary)
-app.use((req, res, next) => {
+// // Add custom CORS headers (if necessary)
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
+//   res.header('Access-Control-Allow-Headers', '*');
+//   next();
+// });
+
+// Handle preflight requests
+app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept', 'Authorization','Set-Cookie');
-  next();
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', '*'); // Allow all headers
+  res.sendStatus(204);
 });
 
 
