@@ -24,7 +24,7 @@ app.use(
     origin: "https://ajayduddi.github.io",
     credentials: true,
     maxAge: 1 * 24 * 60 * 60, // 1 day,
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization','Set-Cookie'],
   })
 );
 
@@ -33,18 +33,10 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept', 'Authorization');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept', 'Authorization','Set-Cookie');
   next();
 });
 
-// Handle preflight requests
-app.options('*', cors({
-  origin: "https://ajayduddi.github.io",
-  credentials: true,
-  maxAge: 1 * 24 * 60 * 60, // 1 day,
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
-})
-); // Preflight requests will be handled for all routes
 
 // Session Setup
 app.use(session({
