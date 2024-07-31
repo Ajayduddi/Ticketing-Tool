@@ -13,7 +13,7 @@
 @media (min-width: 1200px) and (max-width: 1500px) {
     .user-card {
         width: 50% !important;
-    }   
+    }
 }
 
 @media (max-width: 1024px) {

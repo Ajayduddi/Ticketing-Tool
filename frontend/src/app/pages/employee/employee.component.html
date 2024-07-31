@@ -110,7 +110,7 @@
                             <small *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">Name is
                                 required</small>
                         </div>
-                        <div class="field pl-2 col-md-6 col-sm-12">
+                        <div class="field col-md-6 col-sm-12" id="contact_no">
                             <label htmlFor="contact_no">Contact No </label>
                             <p-inputNumber id="contact_no" [(ngModel)]="empObj.contactNo" type="number"
                                 placeholder="123456789" [useGrouping]="false" ngModel required minlength="10" maxlength="10"

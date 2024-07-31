@@ -3,6 +3,10 @@
     align-content: center;
 }
 
+#contact_no{
+  padding-left: 0.2rem;
+}
+
 .sub-user-card .surface-50{
     background-color:rgba(211, 211, 211, 0.256) !important;
 }
@@ -23,6 +27,10 @@
     #gender{
         padding-left: 0rem !important;
     }
+
+    #contact_no{
+        padding-left: 0rem !important;
+    }
 }
 
 @media (max-width: 575px) {
@@ -35,6 +43,10 @@
     }
 
     #gender{
+        padding-left: 0rem !important;
+    }
+
+    #contact_no{
         padding-left: 0rem !important;
     }
 }

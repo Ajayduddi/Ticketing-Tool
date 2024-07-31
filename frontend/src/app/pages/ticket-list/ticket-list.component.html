@@ -1,7 +1,7 @@
 <main>
     <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
     <p-confirmDialog />
-    <div class="col-md-12 flex flex-row align-item-center justify-content-between">
+    <div class="col-md-12 grid align-item-center justify-content-between">
         <div class="flex flex-column gap-2">
             <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'getall' && user.role === 'superadmin'">Tickets</span>
             <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'getall' && user.role === 'Department Head'">Department Tickets</span>
@@ -18,7 +18,7 @@
                 <li class="breadcrumb-item active" aria-current="page" *ngIf="isvisble === 'assignedtickets'">Assigned Tickets</li>
             </ol>
         </div>
-        <div class="flex mt-4">
+        <div class="flex mt-4 ">
             <p-selectButton [options]="stateOptions" [(ngModel)]="isvisble" (onChange)="tickets()" optionLabel="label" optionValue="value" />
         </div>
     </div>
@@ -36,7 +36,7 @@
             <p-button label="Assign" (onClick)="assignTicket()" [disabled]="assign.invalid"></p-button>
         </div>
     </p-dialog>
-   
+
     <div class="col-md-12">
         <p-dataView #dv [value]="ticketdisplay" layout="grid">
             <ng-template pTemplate="grid">
@@ -132,5 +132,5 @@
                 </div>
             </ng-template>
         </p-dataView>
-    </div>   
+    </div>
 </main>
