@@ -45,6 +45,8 @@ app.options('*', (req, res) => {
   res.sendStatus(204);
 });
 
+// for production
+app.set('trust proxy', 1);
 
 // Session Setup
 app.use(session({
