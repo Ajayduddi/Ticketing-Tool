@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
   }
 
   checkThirdPartyCookie() {
-    debugger;
     const thirdPartyDomain = 'https://ticketing-tool-omega.vercel.app/api/';
 
     this.http.get(`${thirdPartyDomain}/set-cookie`, { withCredentials: true }).subscribe(
