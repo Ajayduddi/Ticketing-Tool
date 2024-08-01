@@ -1,0 +1,121 @@
+<main>
+  <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+  <p-confirmDialog />
+  <div class="col-md-12 grid align-item-center justify-content-between">
+    <div class="flex flex-column gap-2">
+      <span class="text-900 font-medium text-3xl">Ticket</span>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"
+            class="text-decoration-none text-900 font-medium">Home</a>
+        </li>
+        <li class="breadcrumb-item"><a routerLink="/tickets"
+            class="text-decoration-none text-900 font-medium">Tickets</a></li>
+        <li class="breadcrumb-item active" aria-current="page">View Ticket</li>
+      </ol>
+    </div>
+  </div>
+
+  <p-dialog header="Assign Employee" [(visible)]="isdialog" [modal]="true" [responsive]="true"
+    [style]="{width: '40rem', height: '17rem'}">
+    .<div class="d-flex flex-row gap-2 align-items-center">
+      <label for="assign_emp" class="font-semibold w-7rem">Department Id</label>
+      <p-dropdown [options]="empList" [(ngModel)]="ticketObj.assignedToEmployee" placeholder="Select Employee"
+        optionLabel="name" optionValue="id" ngModel required #assign="ngModel"></p-dropdown>
+      <small *ngIf="assign.invalid && (assign.dirty || assign.touched)" class="p-error">Assign Employee is
+        required</small>
+    </div>
+    <div class="flex justify-content-end gap-2 mt-4">
+      <p-button label="Reset" (onClick)="reset()" severity="secondary"></p-button>
+      <p-button label="Assign" (onClick)="assignTicket()" [disabled]="assign.invalid"></p-button>
+    </div>
+  </p-dialog>
+
+  <div class="col-md-12 mt-4">
+    <div class="grid row">
+      <div class="col-md-12 relative flex gap-3 p-3 surface-50 border-round justify-content-center">
+        <p-avatar icon="pi pi-ticket" shape="circle" />
+        <div class="text-lg font-medium text-900 mt-1 ">
+          {{ view.ticketNo }}
+        </div>
+      </div>
+      <div class="row mt-4 gap-2 md:gap-3">
+        <div class="col-md-12 flex flex-column gap-2 mb-2">
+          <label class="font-semibold">Request Details : </label>
+          <span class="text">{{ view.requestDetails }}</span>
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Created By : </label>
+          @for (item of empList; track $index) {
+            <span class="text" *ngIf="item.id === view.createdByEmployee">{{ item.name | na }}</span>
+          }
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Assigned To : </label>
+          @for (item of empList; track $index) {
+            <span class="text" *ngIf="item.id === view.assignedToEmployee">{{ item.name | na }}</span>
+          }
+        </div>
+        <div class="col-lg-5 col-md-5  flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Parent Category : </label>
+          @for (item of pcategoryList; track $index) {
+            <span class="text" *ngIf="item.id === view.parentCategoryId">{{ item.name | na }}</span>
+          }
+        </div>
+        <div class="col-lg-5 col-md-5  flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Child Category : </label>
+          @for (item of categoryList; track $index) {
+            <span class="text" *ngIf="item.id === view.childCategoryId">{{ item.name | na }}</span>
+          }
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Department : </label>
+          @for (item of deptlist; track $index) {
+            <span class="text" *ngIf="item.id === view.deptId">{{ item.name | na }}</span>
+          }
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Contact : </label>
+          <span class="text">{{ view.contactNo | na }}</span>
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Priority : </label>
+          <span class="text">{{ view.severity | na }}</span>
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Created At : </label>
+          <span class="text">{{ view.createdDate | date:'dd-MMM-yyyy' | na }}</span>
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Expected By : </label>
+          <span class="text">{{ view.expectedEndDate | date:'dd-MMM-yyyy' | na }}</span>
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Complete At : </label>
+          <span class="text">{{ view.completedDate | date:'dd-MMM-yyyy' | na }}</span>
+        </div>
+        <div class="col-lg-5 col-md-5 flex flex-row gap-3 sm:gap-0">
+          <label class="font-semibold col-md-5 col-sm-4">Status : </label>
+          <p-tag [value]="view.status" [severity]="getSeverity()"></p-tag>
+        </div>
+      </div>
+      <div class="mt-3 align-content-center justify-content-center flex flex-row gap-2">
+        <p-button label="Assign" [outlined]="true"
+          *ngIf="view.status === 'Open' && (user.role === 'Department Head' || user.role === 'superadmin')"
+          (onClick)="isdialogv(view)"></p-button>
+        <p-button label="Start" [outlined]="true" *ngIf="view.status === 'Assigned'"
+          (onClick)="starttkt(view._id)"></p-button>
+        <p-button label="Complete" [outlined]="true" severity="success"
+          *ngIf="view.status === 'In Progress' "
+          (onClick)="closetkt(view._id)"></p-button>
+        @if (user.role === 'Department Head' || user.role === 'superadmin') {
+        @if (view.status !== 'Closed') {
+        <p-button label="close" (onClick)="closetkt(view._id)"></p-button>
+        }
+        }
+        <p-button label="Delete" [outlined]="false" severity="danger" *ngIf="user.role === 'superadmin'"
+          (onClick)="deletetkt(view._id)"></p-button>
+      </div>
+    </div>
+  </div>
+
+</main>

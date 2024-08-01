@@ -9,6 +9,7 @@ import { ParentCategoryComponent } from './pages/parent-category/parent-category
 import { ChildCategoryComponent } from './pages/child-category/child-category.component';
 import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
 import { NewTicketComponent } from './pages/new-ticket/new-ticket.component';
+import { TicketViewComponent } from './pages/ticket-list/ticket-view/ticket-view.component';
 
 export const routes: Routes = [
   {
@@ -47,7 +48,11 @@ export const routes: Routes = [
       },
       {
         path: 'tickets',
-        component:TicketListComponent
+        component: TicketListComponent,
+      },
+      {
+        path: 'ticket-view',
+        component: TicketViewComponent
       },
       {
         path: 'new-ticket',

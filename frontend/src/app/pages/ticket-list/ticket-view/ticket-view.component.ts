@@ -1,23 +1,20 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { AvatarModule } from 'primeng/avatar';
+import { Component, inject } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DataViewModule } from 'primeng/dataview';
-import { Api_Response, EmployeeModel, TicketModel } from '../../core/models/api.model';
-import { DepartmentService } from '../../core/services/department.service';
-import { EmployeeService } from '../../core/services/employee.service';
-import { CategoryService } from '../../core/services/category.service';
-import { TicketService } from '../../core/services/ticket.service';
-import { NaPipe } from '../../shared/pipes/na.pipe';
+import { NaPipe } from '../../../shared/pipes/na.pipe';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
-import { Router } from '@angular/router';
+import { Api_Response, EmployeeModel, TicketModel } from '../../../core/models/api.model';
+import { DepartmentService } from '../../../core/services/department.service';
+import { EmployeeService } from '../../../core/services/employee.service';
+import { CategoryService } from '../../../core/services/category.service';
+import { TicketService } from '../../../core/services/ticket.service';
+import { AvatarModule } from 'primeng/avatar';
 
 type SeverityType =
   | 'success'
@@ -29,12 +26,10 @@ type SeverityType =
   | undefined;
 
 @Component({
-  selector: 'app-ticket-list',
+  selector: 'app-ticket-view',
   standalone: true,
   imports: [
     CommonModule,
-    AvatarModule,
-    DataViewModule,
     ButtonModule,
     DatePipe,
     NaPipe,
@@ -42,32 +37,26 @@ type SeverityType =
     ToastModule,
     ConfirmDialogModule,
     DialogModule,
-    SelectButtonModule,
     DropdownModule,
     TagModule,
+    AvatarModule
   ],
-  templateUrl: './ticket-list.component.html',
-  styleUrl: './ticket-list.component.css',
+  templateUrl: './ticket-view.component.html',
+  styleUrl: './ticket-view.component.css',
   providers: [MessageService, ConfirmationService],
 })
-export class TicketListComponent implements OnInit {
+export class TicketViewComponent {
   empList: { id: string; empId: string; name: string }[] = [];
   deptlist: { id: string; name: string }[] = [];
   pcategoryList: { id: string; name: string }[] = [];
   categoryList: { id: string; name: string }[] = [];
-  ticketList: TicketModel[] = [];
-  mytickets: TicketModel[] = [];
-  assignedtickets: TicketModel[] = [];
   user: EmployeeModel = JSON.parse(localStorage.getItem('user') || '');
-  isvisble: string | undefined;
   isdialog: boolean = false;
-  ticketdisplay: TicketModel[] | undefined;
-  stateOptions: any[] | undefined;
+  view: TicketModel = JSON.parse(localStorage.getItem('ticket') || '');
   ticketObj: { id: string; assignedToEmployee: string } = {
     id: '',
     assignedToEmployee: '',
   };
-
 
   dept = inject(DepartmentService);
   emp = inject(EmployeeService);
@@ -75,44 +64,19 @@ export class TicketListComponent implements OnInit {
   ticket = inject(TicketService);
   message = inject(MessageService);
   confirm = inject(ConfirmationService);
-  router = inject(Router);
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    if (this.user.role === 'superadmin') {
-      this.isvisble = 'getall';
-      this.stateOptions = [
-        { label: 'All Tickets', value: 'getall' },
-        { label: 'My Tickets', value: 'mytickets' },
-        { label: 'Assigned Tickets', value: 'assignedtickets' },
-      ];
-    } else if (this.user.role === 'Department Head') {
-      this.isvisble = 'getall';
-      this.stateOptions = [
-        { label: 'Department Tickets', value: 'getall' },
-        { label: 'My Tickets', value: 'mytickets' },
-        { label: 'Assigned Tickets', value: 'assignedtickets' },
-      ];
-    } else {
-      this.isvisble = 'mytickets';
-      this.stateOptions = [
-        { label: 'My Tickets', value: 'mytickets' },
-        { label: 'Assigned Tickets', value: 'assignedtickets' },
-      ];
-    }
 
     this.getEmployee();
     this.getDept();
     this.getPcategory();
     this.getChildcategory();
-    this.getTicket();
-    this.getMyTicket();
-    this.getAssignedTicket();
   }
 
-  getSeverity(ticket: TicketModel): SeverityType {
-    switch (ticket.status) {
+  getSeverity(): SeverityType {
+    switch (this.view.status) {
       case 'Open':
         return 'info';
 
@@ -130,11 +94,6 @@ export class TicketListComponent implements OnInit {
     }
   }
 
-  view(ticket_: TicketModel) {
-    localStorage.setItem('ticket', JSON.stringify(ticket_));
-    this.router.navigate(['/ticket-view']);
-  }
-
   reset() {
     this.ticketObj.assignedToEmployee = '';
   }
@@ -142,21 +101,6 @@ export class TicketListComponent implements OnInit {
   isdialogv(ticket: TicketModel) {
     this.ticketObj.id = ticket._id;
     this.isdialog = true;
-  }
-
-  tickets() {
-    if (this.isvisble === 'getall') {
-      this.ticketdisplay = this.ticketList;
-      if (this.user.role === 'Department Head') {
-        this.ticketdisplay = this.ticketdisplay.filter(
-          (item: { deptId: string }) => item.deptId === this.user.deptId
-        );
-      }
-    } else if (this.isvisble === 'mytickets') {
-      this.ticketdisplay = this.mytickets;
-    } else {
-      this.ticketdisplay = this.assignedtickets;
-    }
   }
 
   getEmployee() {
@@ -233,53 +177,6 @@ export class TicketListComponent implements OnInit {
     });
   }
 
-  getTicket() {
-    this.ticket.getAllTickets().subscribe((res: Api_Response) => {
-      if (res.result) {
-        this.ticketList = res.data;
-        this.tickets();
-      } else {
-        this.message.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: res.message,
-        });
-      }
-    });
-  }
-
-  getMyTicket() {
-    this.ticket
-      .getCreatedTicketsByEmpId(this.user._id)
-      .subscribe((res: Api_Response) => {
-        if (res.result) {
-          this.mytickets = res.data;
-          this.tickets();
-        } else {
-          this.message.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: res.message,
-          });
-        }
-      });
-  }
-
-  getAssignedTicket() {
-    this.ticket
-      .getAssignedTicketsByEmpId(this.user._id)
-      .subscribe((res: Api_Response) => {
-        if (res.result) {
-          this.assignedtickets = res.data;
-        } else {
-          this.message.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: res.message,
-          });
-        }
-      });
-  }
 
   assignTicket() {
     this.ticket.assignTicket(this.ticketObj).subscribe({
@@ -291,18 +188,12 @@ export class TicketListComponent implements OnInit {
             summary: 'Success',
             detail: 'Ticket Assigned Successfully',
           });
-          this.getTicket();
-          this.getMyTicket();
-          this.getAssignedTicket();
         } else {
           this.message.add({
             severity: 'error',
             summary: 'Error',
             detail: res.message,
           });
-          this.getTicket();
-          this.getMyTicket();
-          this.getAssignedTicket();
         }
       },
       error: (err: any) => {
@@ -324,7 +215,7 @@ export class TicketListComponent implements OnInit {
     });
   }
 
-  starttkt(id: string) {
+  starttkt(id: string | '') {
     this.ticket.startTicket(id).subscribe({
       next: (res: Api_Response) => {
         if (res.result) {
@@ -333,18 +224,12 @@ export class TicketListComponent implements OnInit {
             summary: 'Success',
             detail: 'Ticket Started Successfully',
           });
-          this.getTicket();
-          this.getMyTicket();
-          this.getAssignedTicket();
         } else {
           this.message.add({
             severity: 'error',
             summary: 'Error',
             detail: res.message,
           });
-          this.getTicket();
-          this.getMyTicket();
-          this.getAssignedTicket();
         }
       },
       error: (err: any) => {
@@ -375,18 +260,12 @@ export class TicketListComponent implements OnInit {
             summary: 'Success',
             detail: 'Ticket Closed Successfully',
           });
-          this.getTicket();
-          this.getMyTicket();
-          this.getAssignedTicket();
         } else {
           this.message.add({
             severity: 'error',
             summary: 'Error',
             detail: res.message,
           });
-          this.getTicket();
-          this.getMyTicket();
-          this.getAssignedTicket();
         }
       },
       error: (err: any) => {
@@ -425,18 +304,12 @@ export class TicketListComponent implements OnInit {
                 summary: 'Success',
                 detail: 'Ticket Deleted Successfully',
               });
-              this.getTicket();
-              this.getMyTicket();
-              this.getAssignedTicket();
             } else {
               this.message.add({
                 severity: 'error',
                 summary: 'Error',
                 detail: res.message,
               });
-              this.getTicket();
-              this.getMyTicket();
-              this.getAssignedTicket();
             }
           },
           error: (err: any) => {
