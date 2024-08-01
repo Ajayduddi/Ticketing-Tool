@@ -17,55 +17,33 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 }).catch((err) => {
   console.log(err);
 });
- 
-// set-up cors
+
+// cors setup
 app.use(cors({
-  origin: 'https://ajayduddi.github.io',
+  origin: ['http://localhost:4200', 'https://ticket.test:4200/'],
   credentials: true,
-  maxAge: 1 * 24 * 60 * 60, // 1 day
+  maxAge: 1 * 24 * 60 * 60 * 1000 // 1 day
 }));
- 
 
-// Add custom CORS headers (if necessary)
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Set-Cookie , Access-Control-Request-Method, Access-Control-Request-Headers');
-  next();
-});
-
-
-// handle preflight requests
-app.options((req, res) => {
-  res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Set-Cookie , Access-Control-Request-Method, Access-Control-Request-Headers');
-  res.sendStatus(204);
-});
-
-// for production
-app.set('trust proxy', 1);
-
-// Session Setup
+// session setup
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
-    maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+    maxAge: 1 * 24 * 60 * 60 * 1000,// 1 day
     httpOnly: true,
-    secure: true, // Ensure secure cookies if using HTTPS
-    sameSite: 'none',
+    secure: false, // set to true if you only serve the app over https
+    sameSite: 'Lax',
   },
   store: mongoStore.create({
     client: mongoose.connection.getClient(),
     collection: 'sessions',
-    secret: process.env.SESSION_SECRET,
-  }),
-}));
-
+    crypto: {
+      secret: process.env.SESSION_SECRET,
+    },
+  })
+}))
 
 // passport setup
 app.use(passport.initialize());
