@@ -40,13 +40,13 @@ export class AppComponent implements OnInit {
   checkThirdPartyCookie() {
     const thirdPartyDomain = 'https://ticketing-tool-omega.vercel.app/api/';
 
-    this.http.get(`${thirdPartyDomain}/set-cookie`, { withCredentials: true }).subscribe(
+    this.http.get(`${thirdPartyDomain}set-cookie`, { withCredentials: true }).subscribe(
       {
         next: () => {
-          this.http.get(`${thirdPartyDomain}/check-cookie`, { withCredentials: true }).subscribe(
+          this.http.get(`${thirdPartyDomain}check-cookie`, { withCredentials: true }).subscribe(
             {
               next: (response: any) => {
-                if (response === 'enabled') {
+                if (response.msg === 'enabled') {
                   console.log('Third-party cookies are enabled');
                 } else {
                   this.loading = false;
