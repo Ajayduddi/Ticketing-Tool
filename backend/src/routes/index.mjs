@@ -15,12 +15,13 @@ router.get("/set-cookie", (req, res) => {
     maxAge: 900000,
     httpOnly: false,
   });
-  res.send("Cookie set");
+  res.status(200);
 });
 
 router.get("/check-cookie", (req, res) => {
   const cookie = req.cookies["thirdPartyTest"];
-  res.send(cookie ? "enabled" : "disabled");
+  const msg = cookie ? "enabled" : "disabled";
+  res.json({ msg: msg });
 });
 
 router.use(employeeRouter);
