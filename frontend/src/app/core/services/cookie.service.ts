@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CookieService {
+
+  private http = inject(HttpClient);
   constructor() {}
 
   areCookiesAccepted(): boolean {
@@ -27,5 +32,12 @@ export class CookieService {
     document.cookie =
       'cookieBy=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
-  
+
+  tsetcookie(): Observable<any>{
+    return this.http.get<any>(environment.API_URL + 'set-cookie', { withCredentials: true });
+  }
+
+  tcheckcookie(): Observable<any>{
+    return this.http.get<any>(environment.API_URL + 'check-cookie', { withCredentials: true });
+  }
 }
