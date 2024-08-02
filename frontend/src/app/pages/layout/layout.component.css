@@ -19,8 +19,15 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
+#main-content{
+    margin: 1.7rem;
+    padding: 1.7rem;
+}
+
 footer{
     background-color: rgba(0, 0, 0, 0.718);
+    position:fixed;
+    bottom: 0;
 }
 
 @media (min-width: 1440px) {
@@ -29,5 +36,11 @@ footer{
     }
     .logo{
         margin: 0px 15px 0px 25px;
+    }
+}
+
+@media (max-width: 570px){
+    #main-content{
+      margin: 1rem !important;
     }
 }

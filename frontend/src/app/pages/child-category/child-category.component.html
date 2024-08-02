@@ -8,7 +8,7 @@
                 <li class="breadcrumb-item"><a routerLink="/dashboard"
                         class="text-decoration-none text-900 font-medium">Home</a>
                 </li>
-                <li class="breadcrumb-item"><a routerLink="/department"
+                <li class="breadcrumb-item"><a routerLink="/child-category"
                         class="text-decoration-none text-900 font-medium">Child Categories</a></li>
                 <li class="breadcrumb-item active" aria-current="page">List</li>
             </ol>
@@ -59,7 +59,7 @@
                 <p-table [value]="categoryList" styleClass="p-datatable" [paginator]="true" [first]="0"
                     [showCurrentPageReport]="true" [rows]="10"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                    [rowsPerPageOptions]="[5, 10, 15, 20, 30]">
+                    [rowsPerPageOptions]="[5, 10, 15, 20, 30]" [tableStyle]="{ 'min-width': '50rem' }">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>S.NO</th>

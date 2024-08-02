@@ -1,136 +1,188 @@
 <main>
-    <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
-    <p-confirmDialog />
-    <div class="col-md-12 flex flex-row align-item-center justify-content-between">
-        <div class="flex flex-column gap-2">
-            <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'getall' && user.role === 'superadmin'">Tickets</span>
-            <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'getall' && user.role === 'Department Head'">Department Tickets</span>
-            <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'mytickets'">My Tickets</span>
-            <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'assignedtickets'">Assigned Tickets</span>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a routerLink="/dashboard"
-                        class="text-decoration-none text-900 font-medium">Home</a>
-                </li>
-                <li class="breadcrumb-item"><a routerLink="/department"
-                        class="text-decoration-none text-900 font-medium">Tickets</a></li>
-                <li class="breadcrumb-item active" aria-current="page" *ngIf="isvisble === 'getall' && user.role === 'superadmin'">All Tickets</li>
-                <li class="breadcrumb-item active" aria-current="page" *ngIf="isvisble === 'mytickets'">My Tickets</li>
-                <li class="breadcrumb-item active" aria-current="page" *ngIf="isvisble === 'assignedtickets'">Assigned Tickets</li>
-            </ol>
-        </div>
-        <div class="flex mt-4">
-            <p-selectButton [options]="stateOptions" [(ngModel)]="isvisble" (onChange)="tickets()" optionLabel="label" optionValue="value" />
-        </div>
+  <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+  <p-confirmDialog />
+  <div class="col-md-12 grid align-item-center justify-content-between">
+    <div class="flex flex-column gap-2">
+      <span class="text-900 font-medium text-3xl"
+        *ngIf="isvisble === 'getall' && user.role === 'superadmin'">Tickets</span>
+      <span class="text-900 font-medium text-3xl"
+        *ngIf="isvisble === 'getall' && user.role === 'Department Head'">Department Tickets</span>
+      <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'mytickets'">My Tickets</span>
+      <span class="text-900 font-medium text-3xl" *ngIf="isvisble === 'assignedtickets'">Assigned Tickets</span>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard"
+            class="text-decoration-none text-900 font-medium">Home</a>
+        </li>
+        <li class="breadcrumb-item"><a routerLink="/tickets"
+            class="text-decoration-none text-900 font-medium">Tickets</a></li>
+        <li class="breadcrumb-item active" aria-current="page"
+          *ngIf="isvisble === 'getall' && user.role === 'superadmin'">All Tickets</li>
+        <li class="breadcrumb-item active" aria-current="page" *ngIf="isvisble === 'mytickets'">My Tickets</li>
+        <li class="breadcrumb-item active" aria-current="page" *ngIf="isvisble === 'assignedtickets'">Assigned Tickets
+        </li>
+      </ol>
     </div>
+    <div class="flex mt-4 ">
+      <p-selectButton [options]="stateOptions" [(ngModel)]="isvisble" (onChange)="tickets()" optionLabel="label"
+        optionValue="value" />
+    </div>
+  </div>
 
-    <p-dialog header="Assign Employee" [(visible)]="isdialog" [modal]="true" [responsive]="true"
-        [style]="{width: '40rem', height: '17rem'}">
-        .<div class="d-flex flex-row gap-2 align-items-center">
-            <label for="assign_emp" class="font-semibold w-7rem">Department Id</label>
-            <p-dropdown [options]="empList" [(ngModel)]="ticketObj.assignedToEmployee" placeholder="Select Employee"
-                optionLabel="name" optionValue="id" ngModel required #assign="ngModel"></p-dropdown>
-                <small *ngIf="assign.invalid && (assign.dirty || assign.touched)">Assign Employee is required</small>
-        </div>
-        <div class="flex justify-content-end gap-2">
-            <p-button label="Reset" (onClick)="reset()" severity="secondary"></p-button>
-            <p-button label="Assign" (onClick)="assignTicket()" [disabled]="assign.invalid"></p-button>
-        </div>
-    </p-dialog>
-   
-    <div class="col-md-12">
-        <p-dataView #dv [value]="ticketdisplay" layout="grid">
-            <ng-template pTemplate="grid">
-                <div class="grid grid-nogutter">
-                    <div class="user-card col-lg-6 col-md-12 col-sm-12 col-xxl-4 p-2 d-print-none" *ngFor="let ticket of ticketdisplay">
-                        <div class="sub-user-card p-4 border-1 surface-border surface-card border-round block">
-                            <div class="surface-50 flex justify-content-center border-round p-3">
-                                <div class="relative flex gap-3 mx-auto">
-                                    <p-avatar icon="pi pi-ticket" shape="circle" />
-                                    <div class="text-lg font-medium text-900 mt-1">
-                                        {{ ticket.ticketNo }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pt-4">
-                                <div class="flex flex-row justify-content-between align-items-start gap-2">
-                                    <div class="col-md-8">
-                                        <span class="font-medium text-secondary text-sm block">{{ "Ticket Id: " +
-                                            ticket.ticketNo}}</span>
-                                        <div class="text font-medium text-900 mt-1 block">
-                                            {{ ticket.requestDetails}}
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-column gap-1 col-md-3" style="border-radius: 30px">
-                                        <span class="font-medium text-secondary text-sm">
-                                            <div class="pi pi-calendar d-inline-block"> {{ ticket.createdDate |
-                                                date:'dd-MMM-yyyy' | na }}</div>
-                                        </span>
-                                        <div class="text font-medium text-900 d-inline-block mt-1">
-                                            {{ 'status : ' + ticket.status }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row justify-content-between mt-3">
-                                    <div class="flex flex-column">
-                                        <div class="" *ngFor="let dept of deptlist">
-                                            <span class="text font-medium pi pi-building"
-                                                *ngIf="dept.id === ticket.deptId">
-                                                {{ dept.name }}</span>
-                                        </div>
-                                        <div class="">
-                                            <span class="text font-medium pi pi-star">
-                                                {{ ticket.severity }}</span>
-                                        </div>
-                                        <div class="" *ngFor="let item of pcategoryList">
-                                            <span class="text font-medium pi pi-tag"
-                                                *ngIf="item.id === ticket.parentCategoryId">
-                                                {{ item.name }}</span>
-                                        </div>
-                                        <div class="" *ngFor="let item of categoryList">
-                                            <span class="text font-medium pi pi-tags"
-                                                *ngIf="item.id === ticket.childCategoryId">
-                                                {{ item.name }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-column ">
-                                        <div class="" *ngFor="let emp of empList">
-                                            <span class="text text-sm" *ngIf="emp.id === ticket.createdByEmployee">
-                                                {{'Created By : '+ emp.name }}</span>
-                                        </div>
-                                        <div class="" *ngFor="let emp of empList">
-                                            <span class="text text-sm" *ngIf="emp.id === ticket.assignedToEmployee">
-                                                {{ 'Assigned To : ' + emp.name }}</span>
-                                        </div>
-                                        <div class="">
-                                            <span class="text text-sm">
-                                                Expected Date : {{ ticket.expectedEndDate | date:'dd-MMM-yyyy' | na
-                                                }}</span>
-                                        </div>
-                                        <div class="">
-                                            <span class="text text-sm">
-                                                Completed Date : {{ ticket.completedDate | date:'dd-MMM-yyyy' | na
-                                                }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-3 align-content-center justify-content-center flex flex-row gap-2">
-                                <p-button label="Assign" [outlined]="true" *ngIf="ticket.status === 'Open' && isvisble === 'getall' && (user.role === 'Department Head' || user.role === 'superadmin')" (onClick)="isdialogv(ticket)"></p-button>
-                                <p-button label="Start" [outlined]="true" *ngIf="ticket.status === 'Assigned' && isvisble === 'assignedtickets'" (onClick)="starttkt(ticket._id)"></p-button>
-                                <p-button label="Complete" [outlined]="true" severity="success" *ngIf="ticket.status === 'In Progress' && isvisble === 'assignedtickets'" (onClick)="closetkt(ticket._id)"></p-button>
-                                @if (user.role === 'Department Head' || user.role === 'superadmin') {
-                                    @if (isvisble === 'getall' || isvisble === 'assignedtickets') {
-                                        @if (ticket.status !== 'Closed') {
-                                            <p-button label="close" (onClick)="closetkt(ticket._id)"></p-button>
-                                        }
-                                    }
-                                }
-                                <p-button label="Delete" [outlined]="false" severity="danger" *ngIf="user.role === 'superadmin'" (onClick)="deletetkt(ticket._id)"></p-button>
-                            </div>
-                        </div>
-                    </div>
+  <p-dialog header="Assign Employee" [(visible)]="isdialog" [modal]="true" [responsive]="true"
+    [style]="{width: '40rem', height: '17rem'}">
+    .<div class="d-flex flex-row gap-2 align-items-center">
+      <label for="assign_emp" class="font-semibold w-7rem">Department Id</label>
+      <p-dropdown [options]="empList" [(ngModel)]="ticketObj.assignedToEmployee" placeholder="Select Employee"
+        optionLabel="name" optionValue="id" ngModel required #assign="ngModel"></p-dropdown>
+      <small *ngIf="assign.invalid && (assign.dirty || assign.touched)" class="p-error">Assign Employee is required</small>
+    </div>
+    <div class="flex justify-content-end gap-2 mt-4">
+      <p-button label="Reset" (onClick)="reset()" severity="secondary"></p-button>
+      <p-button label="Assign" (onClick)="assignTicket()" [disabled]="assign.invalid"></p-button>
+    </div>
+  </p-dialog>
+
+  <!--- for Large Screens -->
+  <div class="d-none d-md-block d-sm-none col-md-12" id="display-large">
+    <p-dataView #dv [value]="ticketdisplay" layout="grid">
+      <ng-template pTemplate="grid">
+        <div class="grid grid-nogutter">
+          <div class="user-card col-lg-6 col-md-12 col-sm-12 col-xxl-4 p-2 d-print-none"
+            *ngFor="let ticket of ticketdisplay">
+            <div class="sub-user-card p-4 border-1 surface-border surface-card border-round">
+              <div class="surface-50 flex justify-content-center border-round p-3">
+                <div class="relative flex gap-3 mx-auto">
+                  <p-avatar icon="pi pi-ticket" shape="circle" />
+                  <div class="text-lg font-medium text-900 mt-1">
+                    {{ ticket.ticketNo }}
+                  </div>
                 </div>
-            </ng-template>
-        </p-dataView>
-    </div>   
+              </div>
+              <div class="pt-4">
+                <div class="flex flex-row justify-content-between align-items-start gap-2" id="card-head">
+                  <div class="col-md-8" id="card-head-1">
+                    <span class="font-medium text-secondary text-sm d-none d-sm-none d-md-block">{{ "Ticket Id: " +
+                      ticket.ticketNo}}</span>
+                    <div class="text font-medium text-900 mt-1 block">
+                      {{ ticket.requestDetails}}
+                    </div>
+                  </div>
+                  <div class="flex flex-column gap-1 col-md-3" style="border-radius: 30px" id="card-head-2">
+                    <span class="font-medium text-secondary text-sm">
+                      <div class="pi pi-calendar d-inline-block"> {{ ticket.createdDate |
+                        date:'dd-MMM-yyyy' | na }}</div>
+                    </span>
+                    <span class="font-medium text-900">
+                      <div class="d-inline-block"> {{ 'status: ' + ticket.status }}</div>
+                    </span>
+
+                  </div>
+                </div>
+                <div class="flex flex-row justify-content-between mt-3">
+                  <div class="flex flex-column">
+                    <div class="" *ngFor="let dept of deptlist">
+                      <span class="text font-medium pi pi-building" *ngIf="dept.id === ticket.deptId">
+                        {{ dept.name }}</span>
+                    </div>
+                    <div class="">
+                      <span class="text font-medium pi pi-star">
+                        {{ ticket.severity }}</span>
+                    </div>
+                    <div class="" *ngFor="let item of pcategoryList">
+                      <span class="text font-medium pi pi-tag" *ngIf="item.id === ticket.parentCategoryId">
+                        {{ item.name }}</span>
+                    </div>
+                    <div class="" *ngFor="let item of categoryList">
+                      <span class="text font-medium pi pi-tags" *ngIf="item.id === ticket.childCategoryId">
+                        {{ item.name }}</span>
+                    </div>
+                  </div>
+                  <div class="flex flex-column ">
+                    <div class="" *ngFor="let emp of empList">
+                      <span class="text text-sm" *ngIf="emp.id === ticket.createdByEmployee">
+                        {{'Created By : '+ emp.name }}</span>
+                    </div>
+                    <div class="" *ngFor="let emp of empList">
+                      <span class="text text-sm" *ngIf="emp.id === ticket.assignedToEmployee">
+                        {{ 'Assigned To : ' + emp.name }}</span>
+                    </div>
+                    <div class="">
+                      <span class="text text-sm">
+                        Expected Date : {{ ticket.expectedEndDate | date:'dd-MMM-yyyy' | na
+                        }}</span>
+                    </div>
+                    <div class="">
+                      <span class="text text-sm">
+                        Completed Date : {{ ticket.completedDate | date:'dd-MMM-yyyy' | na
+                        }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-3 align-content-center justify-content-center flex flex-row gap-2">
+                <p-button label="Assign" [outlined]="true"
+                  *ngIf="ticket.status === 'Open' && isvisble === 'getall' && (user.role === 'Department Head' || user.role === 'superadmin')"
+                  (onClick)="isdialogv(ticket)"></p-button>
+                <p-button label="Start" [outlined]="true"
+                  *ngIf="ticket.status === 'Assigned' && isvisble === 'assignedtickets'"
+                  (onClick)="starttkt(ticket._id)"></p-button>
+                <p-button label="Complete" [outlined]="true" severity="success"
+                  *ngIf="ticket.status === 'In Progress' && isvisble === 'assignedtickets'"
+                  (onClick)="closetkt(ticket._id)"></p-button>
+                @if (user.role === 'Department Head' || user.role === 'superadmin') {
+                @if (isvisble === 'getall' || isvisble === 'assignedtickets') {
+                @if (ticket.status !== 'Closed') {
+                <p-button label="close" (onClick)="closetkt(ticket._id)"></p-button>
+                }
+                }
+                }
+                <p-button label="Delete" [outlined]="false" severity="danger" *ngIf="user.role === 'superadmin'"
+                  (onClick)="deletetkt(ticket._id)"></p-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+
+  <!--- for Small Screens -->
+  <div class="d-sm-block d-md-none col-md-12 mt-4" id="display-small">
+    <p-dataView #dv [value]="ticketdisplay" [rows]="5" [paginator]="true">
+      <ng-template pTemplate="list" let-ticket>
+        <div class="grid grid-nogutter">
+          <div class="col-12" *ngFor="let ticket of ticketdisplay; let first = first" class="col-12">
+            <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
+              [ngClass]="{ 'border-top-1 surface-border': !first }">
+              <div class="surface-50 flex justify-content-center border-round p-3">
+                <div class="relative flex gap-3 mx-auto">
+                  <p-avatar icon="pi pi-ticket" shape="circle" />
+                  <div class="text-lg font-medium text-900 mt-1 ">
+                    {{ ticket.ticketNo }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                <div class="flex flex-column gap-2">
+                  <div class="flex flex-row justify-content-between align-items-start gap-2">
+                    <span class="font-medium text-secondary text-sm">{{ ticket.ticketNo }}</span>
+                    <p-tag [value]="ticket.status" [severity]="getSeverity(ticket)"></p-tag>
+                  </div>
+                  <div class="text-lg font-medium text-900 mt-2">{{ ticket.requestDetails }}</div>
+                </div>
+                <div class="flex flex-column md:align-items-end gap-5">
+                  <div class="flex flex-row-reverse md:flex-row gap-2">
+                    <p-button class="" [outlined]="true" label="View" (onClick)="view(ticket)"/>
+                    <p-button class="flex-auto md:flex-initial white-space-nowrap" label="Assign"
+                      *ngIf="ticket.status === 'Open' && isvisble === 'getall' && (user.role === 'Department Head' || user.role === 'superadmin')"
+                      (onClick)="isdialogv(ticket)" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
 </main>
