@@ -1,0 +1,22 @@
+<div class="cookie" *ngIf="!loading || showCookieBox">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQouaL_cdoiD_GhmC1cl_zjBmqZL5PXxptPyg&s" alt=""
+        width="50" height="50" />
+    <p class="text-secondary">You are disabled third-party cookies. Please enable them to use this website.</p>
+</div>
+<router-outlet *ngIf="loading"></router-outlet>
+<div class="wrapper" [class.show]="showCookieBox">
+    <header>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQouaL_cdoiD_GhmC1cl_zjBmqZL5PXxptPyg&s" alt="" width="50" height="50" />
+        <h2>Cookies Consent</h2>
+    </header>
+
+    <div class="data">
+        <p>This website will only work properly after you accept third-party cookies. Please enable cookies for a superior and
+            relevant browsing experience.</p>
+    </div>
+
+    <div class="buttons">
+        <button class="button" id="acceptBtn" (click)="acceptCookies()">Accept</button>
+        <button class="button" id="declineBtn" (click)="declineCookies()">Decline</button>
+    </div>
+</div>

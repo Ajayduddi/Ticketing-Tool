@@ -1,0 +1,186 @@
+<main>
+    <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+    <p-confirmDialog />
+    <div class="col-md-12 flex flex-row align-item-center justify-content-between">
+        <div class="flex flex-column gap-2">
+            <span class="text-900 font-medium text-3xl" *ngIf="!isvisable">Employees</span>
+            <span class="text-900 font-medium text-3xl" *ngIf="empObj._id === '' && isvisable">New Employees</span>
+            <span class="text-900 font-medium text-3xl" *ngIf="empObj._id !== '' && isvisable">Edit Employees</span>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard"
+                        class="text-decoration-none text-900 font-medium">Home</a>
+                </li>
+                <li class="breadcrumb-item"><a routerLink="/employee"
+                        class="text-decoration-none text-900 font-medium">Employees</a></li>
+                <li class="breadcrumb-item active" aria-current="page" *ngIf="!isvisable">List</li>
+                <li class="breadcrumb-item active" aria-current="page" *ngIf="empObj._id === '' && isvisable">Add</li>
+                <li class="breadcrumb-item active" aria-current="page" *ngIf="empObj._id !== '' && isvisable">Edit</li>
+            </ol>
+        </div>
+        <div class="flex flex-row gap-2 mt-4">
+            <p-button class="d-none d-sm-none d-md-block" label="Add Employee" icon="pi pi-plus" [raised]="true"
+                (onClick)="newEmp()" *ngIf="!isvisable && user.role === 'superadmin'"></p-button>
+            <p-button class="d-md-none d-sm-block" icon="pi pi-plus" [raised]="true" (onClick)="newEmp()"
+                *ngIf="!isvisable && user.role === 'superadmin'"></p-button>
+            <p-button class="d-none d-sm-none d-md-block" label="cancel" [raised]="true" (onClick)="cancelEmp()"
+                *ngIf="isvisable && user.role === 'superadmin'"></p-button>
+            <p-button class="d-md-none d-sm-block" icon="pi pi-times" [raised]="true" (onClick)="cancelEmp()"
+                *ngIf="isvisable && user.role === 'superadmin'"></p-button>
+        </div>
+    </div>
+    <div class="col-md-12 mt-2" *ngIf="!isvisable">
+        <p-dataView #dv [value]="empList$" layout="grid">
+            <ng-template pTemplate="grid" let-products>
+                <div class="grid grid-nogutter">
+                    <div class="user-card col-xl-4 col-md-6 col-sm-12 p-2 d-print-none"
+                        *ngFor="let product of empList$">
+                        <div class="sub-user-card p-4 border-1 surface-border surface-card border-round block">
+                            <div class="surface-50 flex justify-content-center border-round p-3">
+                                <div class="relative flex gap-3 mx-auto">
+                                    <p-avatar icon="pi pi-user" shape="circle" />
+                                    <div class="text-lg font-medium text-900 mt-1">
+                                        {{ product.name }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-4">
+                                <div class="flex flex-row justify-content-between align-items-start gap-2">
+                                    <div class="col-md-9">
+                                        <span class="font-medium text-secondary text-sm ">{{ "Emp Id: " +
+                                            product.userId }}</span>
+                                        <div class="text font-medium text-900 mt-1">
+                                            {{ product.name }}
+                                        </div>
+                                    </div>
+                                    <div class=" flex flex-column gap-2 col-md-3" style="border-radius: 30px">
+                                        <span class="font-medium text-secondary pi pi-phone text-sm">
+                                            {{ product.contactNo }}
+                                        </span>
+                                        <div class="text font-medium text-900 pi pi-verified block">
+                                            {{ product.status }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-row justify-content-between mt-4">
+                                    <div class="flex flex-column">
+                                        <div class="d-inline-block">
+                                            <span class="text font-medium pi pi-envelope">
+                                                {{ product.email }}</span>
+                                        </div>
+                                        <div class="" *ngFor="let dept of deptlist$">
+                                            <span class="text font-medium pi pi-building"
+                                                *ngIf="dept.id === product.deptId">
+                                                {{ dept.name }}</span>
+                                        </div>
+                                        <div class="">
+                                            <span class="text font-medium pi pi-user">
+                                                {{ product.role }}</span>
+                                        </div>
+                                        <div class="hidden">
+                                            <span class="text font-medium pi pi-user">
+                                                {{ product.gender }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 flex flex-row">
+                                        <p-button icon="pi pi-user-edit" [rounded]="true" [text]="true"
+                                            [outlined]="true" severity="secondary" (onClick)="onEdit(product)"
+                                            *ngIf="user.role === 'superadmin'" />
+                                        <p-button icon="pi pi-trash" [rounded]="true" severity="danger"
+                                            [outlined]="true" [text]="true" (onClick)="onDelete(product._id)"
+                                            *ngIf="user.role === 'superadmin'" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataView>
+    </div>
+
+    <div class="col-md-12 mt-4" *ngIf="isvisable">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="p-fluid p-formgrid flex flex-wrap">
+                        <div class="field col-md-6 col-sm-12">
+                            <label htmlFor="name">Name</label>
+                            <input pInputText id="name" [(ngModel)]="empObj.name" type="text" placeholder="Alex" ngModel
+                                required #name="ngModel" />
+                            <small *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">Name is
+                                required</small>
+                        </div>
+                        <div class="field col-md-6 col-sm-12" id="contact_no">
+                            <label htmlFor="contact_no">Contact No </label>
+                            <p-inputNumber id="contact_no" [(ngModel)]="empObj.contactNo" type="number"
+                                placeholder="123456789" [useGrouping]="false" ngModel required minlength="10" maxlength="10"
+                                #contact="ngModel"></p-inputNumber>
+                            <div *ngIf="contact.invalid && (contact.dirty || contact.touched)" class="p-error">
+                                <small *ngIf="contact.control.getError('required')">Contact is required</small><br/>
+                            </div>
+                        </div>
+                        <div class="field col-md-12 col-sm-12">
+                            <label htmlFor="email">Email</label>
+                            <input pInputText id="email" [(ngModel)]="empObj.email" type="email"
+                                placeholder="example@gmail.com" ngModel required email="true" #email="ngModel" />
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="p-error">
+                                <small *ngIf="email.control.getError('required')">Email is required</small><br/>
+                                <small *ngIf="email.control.getError('email')">Email is invalid</small>
+
+                            </div>
+                        </div>
+                        <div class="field col-md-12 col-sm-12">
+                            <label htmlFor="password">Password</label>
+                            <input pInputText id="password" [(ngModel)]="empObj.password" type="password"
+                                placeholder="********" ngModel required minlength="6" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(.{6,})" #password="ngModel" />
+                            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="p-error">
+                                <small *ngIf="password.control.getError('required')"> Password is required</small><br/>
+                                <small *ngIf="password.control.getError('minlength')">Password must ay least 6 characters long</small><br/>
+                                <small *ngIf="password.control.getError('pattern')">Password must contain at least one digit, one lowercase, one uppercase, one special character</small>
+                            </div>
+                        </div>
+                        <div class="field col-md-6 col-sm-12">
+                            <label htmlFor="role">Role</label>
+                            <p-dropdown id="role" [(ngModel)]="empObj.role" optionLabel="name" optionValue="name"
+                                placeholder="Select Role" [options]="roles$" ngModel required #role="ngModel"></p-dropdown>
+                                <small *ngIf="role.invalid && (role.dirty || role.touched)" class="p-error">Role is required</small>
+                        </div>
+                        <div class="field col-md-6 col-sm-12" id="gender">
+                            <label htmlFor="gender">Gender</label>
+                            <div class="d-flex flex-wrap align-item-center justify-content-start gap-5 col-md-12 ml-3" >
+                                <div class="gender">
+                                    <input class="form-check-input border border-secondary" [(ngModel)]="empObj.gender"
+                                        [checked]="empObj.gender === 'male'" type="radio" name="male" value="male" ngModel required #gender="ngModel"/>
+                                    <label class="form-check-label" for="male">
+                                        &nbsp; Male
+                                    </label>
+                                </div>
+                                <div class="gender">
+                                    <input class="form-check-input border border-secondary" [(ngModel)]="empObj.gender"
+                                        [checked]="empObj.gender === 'female'" type="radio" name="female"
+                                        value="female" ngModel required #gender="ngModel"/>
+                                    <label class="form-check-label" for="female">
+                                        &nbsp; Female
+                                    </label>
+                                </div>
+                            </div>
+                            <small *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="p-error">Gender is required</small>
+                        </div>
+                        <div class="field col-md-12 col-sm-12">
+                            <label htmlFor="department">Department</label>
+                            <p-dropdown id="department" [(ngModel)]="empObj.deptId" placeholder="Select Department"
+                                optionLabel="name" optionValue="id" [filter]="true" filterBy="name"
+                                [options]="deptlist$" ngModel required #dept="ngModel"></p-dropdown>
+                                <small *ngIf="dept.invalid && (dept.dirty || dept.touched)" class="p-error">Department is required</small>
+                        </div>
+                        <div class="flex align-item-center justify-content-end gap-3 mt-2 col-md-12 col-sm-12">
+                            <p-button severity="secondary" [raised]="true" (onClick)="reset()">Reset</p-button>
+                            <p-button *ngIf="empObj._id == ''" (onClick)="onSubmit()" [disabled]="name.invalid || contact.invalid || email.invalid || password.invalid || role.invalid || gender.invalid || dept.invalid">Submit</p-button>
+                            <p-button *ngIf="empObj._id !== ''" (onClick)="onUpdate()" [disabled]="name.invalid || contact.invalid || email.invalid || password.invalid || role.invalid || gender.invalid || dept.invalid">Update</p-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

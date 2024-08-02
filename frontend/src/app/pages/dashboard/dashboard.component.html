@@ -1,0 +1,100 @@
+<main>
+<div class="grid">
+        <div class="col-6 md:col-6 lg:col-3" *ngIf="user.role === 'superadmin' || user.role === 'Department Head'">
+            <div class="surface-card shadow-2 p-3 border-round" routerLink="/employee">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3" >Total Employees</span>
+                        <div class="text-900 font-medium text-xl">{{allEmp}}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                        style="width:2.5rem;height:2.5rem">
+                        <i class="pi pi-users text-blue-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{newEmployees}} new </span>
+                <span class="text-500">since last week</span>
+            </div>
+        </div>
+        <div class="col-6 md:col-6 lg:col-3" *ngIf="user.role === 'superadmin' || user.role === 'Department Head'">
+            <div class="surface-card shadow-2 p-3 border-round" routerLink="/tickets" onload="constan">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3" >Total Tickets</span>
+                        <div class="text-900 font-medium text-xl">{{allTickets}}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
+                        style="width:2.5rem;height:2.5rem">
+                        <i class="pi pi-briefcase text-orange-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{newDeptTickets}} new </span>
+                <span class="text-500">since last week</span>
+            </div>
+        </div>
+        <div class="col-6 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round" routerLink="/tickets">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3">My Tickets</span>
+                        <div class="text-900 font-medium text-xl">{{myTickets}}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                        style="width:2.5rem;height:2.5rem">
+                        <i class="pi pi-ticket text-cyan-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{newMyTickets}} new </span>
+                <span class="text-500">since last week</span>
+            </div>
+        </div>
+        <div class="col-6 md:col-6 lg:col-3">
+            <div class="surface-card shadow-2 p-3 border-round" routerLink="/tickets">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3">Assigned Tickets</span>
+                        <div class="text-900 font-medium text-xl">{{assignedTickets}}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
+                        style="width:2.5rem;height:2.5rem">
+                        <i class="pi pi-check-circle text-purple-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{newAssignedTickets}} new </span>
+                <span class="text-500">since last week</span>
+            </div>
+        </div>
+        <div class="col-6 md:col-6 lg:col-3" *ngIf="user.role === 'superadmin' || user.role === 'Department Head'">
+            <div class="surface-card shadow-2 p-3 border-round">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3" >New Tickets</span>
+                        <div class="text-900 font-medium text-xl">{{openTickets}}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-green-100 border-round"
+                        style="width:2.5rem;height:2.5rem">
+                        <i class="pi pi-plus-circle text-green-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{newOpenTickets}} new </span>
+                <span class="text-500">since last week</span>
+            </div>
+        </div>
+        <div class="col-6 md:col-6 lg:col-3" *ngIf="user.role === 'superadmin' || user.role === 'Department Head'">
+            <div class="surface-card shadow-2 p-3 border-round">
+                <div class="flex justify-content-between mb-3">
+                    <div>
+                        <span class="block text-500 font-medium mb-3" >Progress Tickets</span>
+                        <div class="text-900 font-medium text-xl">{{progressTickets}}</div>
+                    </div>
+                    <div class="flex align-items-center justify-content-center bg-pink-100 border-round"
+                        style="width:2.5rem;height:2.5rem">
+                        <i class="pi pi-clock text-pink-500 text-xl"></i>
+                    </div>
+                </div>
+                <span class="text-green-500 font-medium">{{newProgressTickets}} new </span>
+                <span class="text-500"> since last week</span>
+            </div>
+        </div>
+    </div>
+</main>

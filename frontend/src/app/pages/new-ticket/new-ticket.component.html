@@ -1,0 +1,104 @@
+<main>
+    <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+    <p-confirmDialog />
+    <div class="col-md-12 flex flex-row align-item-center justify-content-between">
+        <div class="flex flex-column gap-2">
+            <span class="text-900 font-medium text-3xl">New Ticket</span>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard"
+                        class="text-decoration-none text-900 font-medium">Home</a>
+                </li>
+                <li class="breadcrumb-item"><a routerLink="/new-ticket"
+                        class="text-decoration-none text-900 font-medium">New Ticket</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add</li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-12 mt-4" >
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="p-fluid p-formgrid p-2">
+                        <div class="row">
+                            <div class="field col-md-6 col-sm-12">
+                                <label for="name">Name</label>
+                                <p-dropdown id="cemp" [(ngModel)]="ticketObj.createdByEmployee" optionLabel="name" optionValue="id"
+                                    [options]="empList$" [disabled]="true" ngModel required #name="ngModel"/>
+                                    <small *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">Employee is required</small>
+                            </div>
+                            <div class="field col-md-6 col-sm-12">
+                                <label for="contact_no">Contact No </label>
+                                <p-inputNumber id="contact_no" [(ngModel)]="ticketObj.contactNo" type="number" placeholder="123456789"
+                                    [useGrouping]="false" ngModel required minlength="10"  #contact="ngModel"></p-inputNumber>
+                                    <div *ngIf="contact.invalid && (contact.dirty || contact.touched)" class="p-error">
+                                        <small *ngIf="contact.control.getError('required')">Contact is required</small><br/>
+                                        <small *ngIf="contact.control.getError('minlength')">Contact number must be 10 digits</small><br/>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="field col-md-6 col-sm-12">
+                                <label for="pcategory">Parent Category</label>
+                                <p-dropdown id="pcategory" [(ngModel)]="ticketObj.parentCategoryId" placeholder="Select Parent Category"
+                                    optionLabel="name" optionValue="id" [options]="pCategoryList" (onChange)="pchange()" ngModel required #pcategory="ngModel"/>
+                                    <small *ngIf="pcategory.invalid && (pcategory.dirty || pcategory.touched)" class="p-error">Parent Category is required</small>
+                            </div>
+                            <div class="field col-md-6 col-sm-12" *ngIf="categoryList1.length > 0">
+                                <label for="category">Child Category</label>
+                                <p-dropdown id="category" [(ngModel)]="ticketObj.childCategoryId" placeholder="Select category" optionLabel="name"
+                                    optionValue="id" [options]="categoryList1" ngModel required #categoryv="ngModel"/>
+                                    <small *ngIf="categoryv.invalid && (categoryv.dirty || categoryv.touched)" class="p-error">Child Category is required</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="field col-md-6 col-sm-12">
+                                <label for="department">Department</label>
+                                <p-dropdown id="department" [(ngModel)]="ticketObj.deptId" optionLabel="name" optionValue="id"
+                                    placeholder="Select department" [options]="deptlist$" ngModel required #department="ngModel"></p-dropdown>
+                                    <small *ngIf="department.invalid && (department.dirty || department.touched)" class="p-error">Department is required</small>
+                            </div>
+                            <div class="field col-md-6 col-sm-12 align-content-center" id="severity">
+                                <label for="severity" class="pb-1">Priority</label>
+                                <div class="d-flex flex-wrap align-item-center justify-content-start gap-5 col-md-12 ml-3">
+                                    <div class="severity">
+                                        <input class="form-check-input border border-secondary" [(ngModel)]="ticketObj.severity"
+                                            [checked]="ticketObj.severity === 'low'" type="radio" name="low" value="Low" ngModel required #severity="ngModel"/>
+                                        <label class="form-check-label" for="low">
+                                            &nbsp; Low
+                                        </label>
+                                    </div>
+                                    <div class="severity">
+                                        <input class="form-check-input border border-secondary" [(ngModel)]="ticketObj.severity"
+                                            [checked]="ticketObj.severity === 'medium'" type="radio" name="medium" value="Medium" ngModel required #severity="ngModel"/>
+                                        <label class="form-check-label" for="medium">
+                                            &nbsp; Medium
+                                        </label>
+                                    </div>
+                                    <div class="severity">
+                                        <input class="form-check-input border border-secondary" [(ngModel)]="ticketObj.severity"
+                                            [checked]="ticketObj.severity === 'high'" type="radio" name="high" value="High" ngModel required #severity="ngModel"/>
+                                        <label class="form-check-label" for="female">
+                                            &nbsp; High
+                                        </label>
+                                    </div>
+                                </div>
+                                <small *ngIf="severity.invalid && (severity.dirty || severity.touched)" class="p-error">Severity is required</small>
+                            </div>
+                        </div>
+                        <div class="field col-md-12 col-sm-12">
+                            <label for="requestDetails">Request Details</label>
+                            <textarea id="requestDetails" rows="5" cols="30" pInputTextarea [(ngModel)]="ticketObj.requestDetails" ngModel required #request="ngModel"></textarea>
+                            <div *ngIf="request.invalid && (request.dirty || request.touched)" class="p-error">
+                                <small *ngIf="request.control.getError('required')">Request Details is required</small>
+                            </div>
+                        </div>
+                        <div class="flex align-item-center justify-content-end gap-3 mt-2 col-md-12 col-sm-12">
+                            <p-button severity="secondary" [raised]="true" (onClick)="reset()">Reset</p-button>
+                            <p-button (onClick)="onSubmit()" [loading]="loading" [disabled]="name.invalid || contact.invalid || pcategory.invalid || department.invalid || severity.invalid || request.invalid">Submit</p-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

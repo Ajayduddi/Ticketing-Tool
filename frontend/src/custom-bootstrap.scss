@@ -1,0 +1,31 @@
+// Import Bootstrap's functions, variables, and mixins first
+@import "../node_modules/bootstrap/scss/_functions.scss";
+@import "../node_modules/bootstrap/scss/_variables.scss";
+@import "../node_modules/bootstrap/scss/_mixins.scss";
+
+// Import only the required Bootstrap components
+@import "../node_modules/bootstrap/scss/_navbar.scss";
+@import "../node_modules/bootstrap/scss/_dropdown.scss";
+@import "../node_modules/bootstrap/scss/_nav.scss";
+@import "../node_modules/bootstrap/scss/_helpers.scss";
+@import "../node_modules/bootstrap/scss/bootstrap-utilities.scss";
+@import "../node_modules/bootstrap/scss/breadcrumb";
+@import "../node_modules/bootstrap/scss/bootstrap-grid.scss";
+@import "../node_modules/bootstrap/scss/_tables.scss";
+@import "../node_modules/bootstrap/scss/_buttons.scss";
+@import "../node_modules/bootstrap/scss/card";
+
+// custon variables
+$primary: #007bff;
+$secondary: #6c757d;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #343a40;
+$white: #fff;
+
+.breadcrumb .breadcrumb-item a {
+    color: #127eeb !important;
+}
