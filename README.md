@@ -1,6 +1,6 @@
-# Ticketing Tool
+# Ticket Tool
 
-Ticketing Tool is a comprehensive solution designed to streamline the process of handling and managing requests within an organization. It is particularly beneficial in IT companies where it serves as a central system for tracking and resolving issues, managing service requests, and ensuring smooth operations.
+Ticket Tool is a comprehensive solution designed to streamline the process of handling and managing requests within an organization. It is particularly beneficial in IT companies where it serves as a central system for tracking and resolving issues, managing service requests, and ensuring smooth operations.
 
 ## Features
 
