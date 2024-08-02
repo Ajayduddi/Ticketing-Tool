@@ -15,6 +15,7 @@ import { EmployeeService } from '../../../core/services/employee.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { TicketService } from '../../../core/services/ticket.service';
 import { AvatarModule } from 'primeng/avatar';
+import { Router } from '@angular/router';
 
 type SeverityType =
   | 'success'
@@ -64,6 +65,7 @@ export class TicketViewComponent {
   ticket = inject(TicketService);
   message = inject(MessageService);
   confirm = inject(ConfirmationService);
+  router = inject(Router);
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -188,6 +190,9 @@ export class TicketViewComponent {
             summary: 'Success',
             detail: 'Ticket Assigned Successfully',
           });
+          setTimeout(() => {
+            this.router.navigate(['/tickets']);
+          }, 1000);
         } else {
           this.message.add({
             severity: 'error',
@@ -224,6 +229,9 @@ export class TicketViewComponent {
             summary: 'Success',
             detail: 'Ticket Started Successfully',
           });
+          setTimeout(() => {
+            this.router.navigate(['/tickets']);
+          }, 1000);
         } else {
           this.message.add({
             severity: 'error',
@@ -260,6 +268,9 @@ export class TicketViewComponent {
             summary: 'Success',
             detail: 'Ticket Closed Successfully',
           });
+          setTimeout(() => {
+            this.router.navigate(['/tickets']);
+          }, 1000);
         } else {
           this.message.add({
             severity: 'error',
@@ -304,6 +315,9 @@ export class TicketViewComponent {
                 summary: 'Success',
                 detail: 'Ticket Deleted Successfully',
               });
+             setTimeout(() => {
+                this.router.navigate(['/tickets']);
+              }, 1000);
             } else {
               this.message.add({
                 severity: 'error',

@@ -10,12 +10,12 @@ import { ChildCategoryComponent } from './pages/child-category/child-category.co
 import { TicketListComponent } from './pages/ticket-list/ticket-list.component';
 import { NewTicketComponent } from './pages/new-ticket/new-ticket.component';
 import { TicketViewComponent } from './pages/ticket-list/ticket-view/ticket-view.component';
+import { IntroComponent } from './pages/intro/intro.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    component: IntroComponent,
   },
   {
     path: 'login',
