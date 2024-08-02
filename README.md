@@ -78,11 +78,8 @@ For detailed API documentation and to test endpoints, use the following Postman 
 
 Here is a flowchart illustrating the process of using the ticketing tool:
 
-![Ticketing Tool Flowchart]
+![Ticketing Tool Flowchart](https://github.com/Ajayduddi/Ticketing-Tool/blob/main/ticketing%20-tool%20flow%20chart.jpg)
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 ## License
 
