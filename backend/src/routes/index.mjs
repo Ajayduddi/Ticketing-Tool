@@ -3,11 +3,8 @@ import employeeRouter from '../routes//employee.mjs';
 import deptRoputer from '../routes/departments.mjs';
 import categoryRouter from '../routes/category.mjs';
 import ticketRouter from '../routes/tickets.mjs';
-import cookieParser from 'cookie-parser';
 
 const router = Router();
-
-router.use(cookieParser());
 
 router.get('/', (req, res) => {
   res.send('Welcome to the Ticketing tool API!!');
@@ -15,7 +12,7 @@ router.get('/', (req, res) => {
 
 router.get("/set-cookie", (req, res) => {
   console.log("setting cookie");
-  const options = { maxAge: 900000, httpOnly: true, sameSite: 'None', secure: true };
+  const options = { maxAge: 900000, httpOnly: true };
   res.cookie("thirdPartyTest", "enabled", options);
   res.status(200).end();
 });
