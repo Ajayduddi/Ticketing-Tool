@@ -11,17 +11,17 @@ router.get('/', (req, res) => {
 });
 
 router.get("/set-cookie", (req, res) => {
-  res.cookie("thirdPartyTest", "enabled", {
-    maxAge: 900000,
-    httpOnly: false,
-  });
-  res.status(200);
+  console.log("setting cookie");
+  const options = { maxAge: 900000, httpOnly: true };
+  res.cookie("thirdPartyTest", "enabled", options);
+  res.status(200).end();
 });
 
 router.get("/check-cookie", (req, res) => {
-  const cookie = req.cookies["thirdPartyTest"];
-  const msg = cookie ? "enabled" : "disabled";
-  res.json({ msg: msg });
+  console.log("checking cookie");
+  console.log(req.cookies);
+  const msg = req.cookies && req.cookies["thirdPartyTest"] ? req.cookies["thirdPartyTest"] : "disabled";
+  res.json({ msg: msg }).end();
 });
 
 router.use(employeeRouter);
