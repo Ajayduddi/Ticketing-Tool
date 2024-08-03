@@ -55,13 +55,13 @@ router.get('/dashboard', (req, res) => {
                 let allEmployees = await user.find();
                 const newdeptEmployees = allEmployees.filter((x) => x.createdDate >= new Date(new Date().getDate() - 7)).length;
                 allEmployees = allEmployees.length;
-                let openTickets = await ticket.find({deptId: req.user.deptId,status: "Open",});
+                let openTickets = await ticket.find({ status: "Open",});
                 const newopenTickets = tickets.filter((x) => (x.createdDate >= new Date(new Date().getDate() - 7))).length;
                 openTickets = openTickets.length;
-                let ProgressTickets = await ticket.find({ deptId: req.user.deptId, status: "In Progress" });
+                let ProgressTickets = await ticket.find({ status: "In Progress" });
                 const newProgressTickets = tickets.filter((x) => (x.createdDate >= new Date(new Date().getDate() - 7) && (x.status === "In Progress" || x.status === 'Closed'))).length;
                 ProgressTickets = ProgressTickets.length;
-                let startTickets = await ticket.find({ deptId: req.user.deptId, status: "Assigned" });
+                let startTickets = await ticket.find({ status: "Assigned" });
                 const newstartTickets = tickets.filter((x) => (x.createdDate >= new Date(new Date().getDate() - 7) && x.status === "Assigned")).length;
                 startTickets = startTickets.length;
                
