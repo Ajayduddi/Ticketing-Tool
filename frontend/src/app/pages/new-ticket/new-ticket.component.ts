@@ -39,7 +39,7 @@ export class NewTicketComponent implements OnInit {
   user: EmployeeModel = JSON.parse(localStorage.getItem('user') || '');
   empList$: { id: string; name: string }[] = [];
   deptlist$: { id: string; name: string }[] = [];
-  pCategoryList: { id: string; name: string}[] = [];
+  pCategoryList: { id: string; name: string;  deptId: string}[] = [];
   categoryList: { id: string; name: string, parentCategoryId: string }[] = [];
   categoryList1: { id: string; name: string, parentCategoryId: string }[] = [];
   loading: boolean = false;
@@ -64,6 +64,8 @@ export class NewTicketComponent implements OnInit {
     this.categoryList1 = this.categoryList;
     const result = this.categoryList1.filter((item: { parentCategoryId: string; }) => (item.parentCategoryId === this.ticketObj.parentCategoryId));
     this.categoryList1 = result;
+    const result1 = this.pCategoryList.find((item: { id: string; }) => (item.id === this.ticketObj.parentCategoryId));
+    this.ticketObj.deptId = result1 ? result1.deptId : '';
   }
   getEmpList() {
     this.employee.getEmployees().subscribe((res: Api_Response) => {
@@ -96,7 +98,7 @@ export class NewTicketComponent implements OnInit {
   getPcategory() {
     this.category.getParentCategories().subscribe((res: Api_Response) => {
       if (res.result) {
-        this.pCategoryList = res.data.map((item: { _id: string; categoryName: string; }) => ({ id: item._id, name: item.categoryName }));
+        this.pCategoryList = res.data.map((item: { _id: string; categoryName: string; deptId: string; }) => ({ id: item._id, name: item.categoryName, deptId: item.deptId }));
       } else {
         this.message.add({
           severity: 'error',
