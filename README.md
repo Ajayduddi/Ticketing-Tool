@@ -72,7 +72,7 @@ Ensure you have the following installed on your local development machine:
 
 For detailed API documentation and to test endpoints, use the following Postman link:
 
-[Postman API Documentation](https://www.postman.com/collections/your-postman-link)
+[Postman API Documentation](https://github.com/Ajayduddi/Ticketing-Tool/blob/main/Ticket%20Tool.postman_collection.json)
 
 ## Flowchart
 
