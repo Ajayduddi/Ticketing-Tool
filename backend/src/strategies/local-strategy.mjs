@@ -12,7 +12,11 @@ passport.deserializeUser(async (id, done) => {
   console.log("inside deserializeUser");
   try {
     const finduser = await user.findById(id);
+    if (finduser) {
       finduser.status == "Active" ? done(null, finduser) : done("user not active", null);
+    } else {
+      done("user not found", null);
+    }
   } catch (error) {
     done(error, null);
   }
