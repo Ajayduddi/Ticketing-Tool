@@ -1,6 +1,6 @@
-# Ticketing Tool
+# Ticket Tool
 
-Ticketing Tool is a comprehensive solution designed to streamline the process of handling and managing requests within an organization. It is particularly beneficial in IT companies where it serves as a central system for tracking and resolving issues, managing service requests, and ensuring smooth operations.
+Ticket Tool is a comprehensive solution designed to streamline the process of handling and managing requests within an organization. It is particularly beneficial in IT companies where it serves as a central system for tracking and resolving issues, managing service requests, and ensuring smooth operations.
 
 ## Features
 
@@ -78,13 +78,10 @@ For detailed API documentation and to test endpoints, use the following Postman 
 
 Here is a flowchart illustrating the process of using the ticketing tool:
 
-![Ticketing Tool Flowchart]
+![Ticketing Tool Flowchart](https://github.com/Ajayduddi/Ticketing-Tool/blob/main/ticketing%20-tool%20flow%20chart.jpg)
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License
 
