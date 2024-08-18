@@ -169,16 +169,15 @@ router.put('/updateEmployee/:id', checkSchema(employeeSchema), (req, res) => {
                     res.status(500).json({ result: false, message: "Internal Server Error", data: error });
                 });
 
-                let user = await user.findById(id);
-                if (user.role === 'superadmin') { 
-                    res.status(200).json({ result: true, message: "Employee updated successfully", data: null });
-                }
-                else {
+                let userd = await user.findById(id);
+                if (!userd.role === 'superadmin') {
                     if (await user.findByIdAndUpdate(id, data)) {
                         res.status(200).json({ result: true, message: "Employee updated successfully", data: null });
                     } else {
                         res.status(404).json({ result: false, message: "Employee not found", data: null });
                     }
+                } else {
+                    res.status(200).json({ result: true, message: "Employee updated successfully", data: null });
                 }
             } else {
                 res.status(403).json({ result: false, message: "You are not authorized to perform this action", data: null });
