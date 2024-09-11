@@ -170,7 +170,7 @@ router.put('/updateEmployee/:id', checkSchema(employeeSchema), (req, res) => {
                 });
 
                 let userd = await user.findById(id);
-                if (!userd.role === 'superadmin') {
+                if (userd.role != 'superadmin') {
                     if (await user.findByIdAndUpdate(id, data)) {
                         res.status(200).json({ result: true, message: "Employee updated successfully", data: null });
                     } else {
@@ -202,7 +202,7 @@ router.delete('/deleteEmployee/:id', (req, res) => {
             if (req.user.role === 'superadmin') {
 
                 let userd = await user.findById(id);
-                if (!userd.role === 'superadmin') {
+                if (userd.role != 'superadmin') {
                     if (await user.findByIdAndDelete(id)) {
                         res.status(200).json({ result: true, message: "Employee deleted successfully", data: null });
                     } else {
