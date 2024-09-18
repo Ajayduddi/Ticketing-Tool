@@ -1,0 +1,865 @@
+{
+	"info": {
+		"_postman_id": "92d229a4-e934-4596-9e2c-92cfb5a6ce1e",
+		"name": "Ticket Tool",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32548862"
+	},
+	"item": [
+		{
+			"name": "Departments",
+			"item": [
+				{
+					"name": "GetAllRoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getRoles",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getRoles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDepartments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getDepartments",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getDepartments"
+							],
+							"query": [
+								{
+									"key": "deptName",
+									"value": "deptName",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"deptName\": \"Operations\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/createDepartment",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"createDepartment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateDepartment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"deptName\": \"Operation\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/updateDepartment/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"updateDepartment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6699269bfd68ca426b3e7008"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteDepartment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/deleteDepartment/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"deleteDepartment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6699269bfd68ca426b3e7008"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "GetParentCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getParentCategories",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getParentCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateParentCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryName\": \"System Repair\",\r\n    \"deptId\": \"66992b7e1bb9033d3584db2f\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/createParentCategory",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"createParentCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateParentCategory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryName\": \"System Security\",\r\n    \"deptId\": \"66992b7e1bb9033d3584db2f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/updateParentCategory/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"updateParentCategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6699450dc43bbb0359e1654c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteParentCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/deleteParentCategory/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"deleteParentCategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66993fa25e4a9be32b219ada"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetChildCategory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getChildCategories",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getChildCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetChildCategoryByParentId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getChildCategoryByParentId/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getChildCategoryByParentId",
+								":id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6699450dc43bbb0359e1654c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateChildCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryName\": \"Change Hardware\",\r\n    \"parentCategoryId\": \"669e19810e61661f6f073920\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/createChildCategory",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"createChildCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateChildCategory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoryName\": \"system testing\",\r\n    \"parentCategoryId\": \"6699450dc43bbb0359e1654c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/updateChildCategory/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"updateChildCategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66994b051a1f2b91eb36559e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteChildCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/deleteChildCategory/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"deleteChildCategory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66994e9191e081929cecdf85"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "GetEmployees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}api/getEmployees",
+							"host": [
+								"{{ticketNew}}api"
+							],
+							"path": [
+								"getEmployees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEmployeeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getEmployeeById/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getEmployeeById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669927557c96df60c3a4d549"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEmployeesByDeptId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getEmployeeByDeptId/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getEmployeeByDeptId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66992b7e1bb9033d3584db2f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"ajay@gmail.com\",\r\n  \"password\": \"Ajay@119\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/login",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Ajay\",\r\n  \"contactNo\": \"709577922\",\r\n  \"email\": \"ajay@gmail.com\",\r\n  \"deptId\": \"66992b7e1bb9033d3584db2f\",\r\n  \"password\": \"Ajay@119\",\r\n  \"gender\": \"male\",\r\n  \"role\": \"Department Head\",\r\n  \"status\": \"Active\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/createEmployee",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"createEmployee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateEmployee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"albus\",\r\n  \"contactNo\": \"2345678976\",\r\n  \"email\": \"albus@gmail.com\",\r\n  \"deptId\": \"66992b7e1bb9033d3584db2f\",\r\n  \"password\": \"Albus@119\",\r\n  \"gender\": \"male\",\r\n  \"role\": \"employee\",\r\n  \"status\": \"Active\"    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/updateEmployee/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"updateEmployee",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669927557c96df60c3a4d549"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEmployee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/deleteEmployee/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"deleteEmployee",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6698ec782ba906895b79274d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tickets",
+			"item": [
+				{
+					"name": "Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/dashboard",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAssignedTicketsByEmpId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getAssignedTicketsByEmpId/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getAssignedTicketsByEmpId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669bef5af256a9421f740f97"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCreatedTicketsByEmpId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getCreatedTicketsByEmpId/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getCreatedTicketsByEmpId",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669927557c96df60c3a4d549"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getAllTickets",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getAllTickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTicketById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/getTicketById/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"getTicketById",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTicket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"createdByEmployee\": \"669bef5af256a9421f740f97\",\r\n    \"contactNo\": 7095779225,\r\n    \"requestDetails\": \"Implement firewall in the System\",\r\n    \"parentCategoryId\": \"6699450dc43bbb0359e1654c\",\r\n    \"childCategoryId\": \"669e0ada8909cb4b753821a0\",\r\n    \"deptId\": \"66992b7e1bb9033d3584db2f\",\r\n    \"severity\": \"Medium\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/createTicket",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"createTicket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AssignTicket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"assignedToEmployee\" : \"669e98a2de422b8c5434d196\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ticketNew}}/api/assignTicket/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"assignTicket",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669f879ef21599959413ac46"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start Ticket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/startTicket/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"startTicket",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669e80fbde38edaf4baad0b8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "closeTicket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}api/closeTicket/:id",
+							"host": [
+								"{{ticketNew}}api"
+							],
+							"path": [
+								"closeTicket",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669e80fbde38edaf4baad0b8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTicket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ticketNew}}/api/deleteTicket/:id",
+							"host": [
+								"{{ticketNew}}"
+							],
+							"path": [
+								"api",
+								"deleteTicket",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "669e2f659495382631aac522"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ticketNew",
+			"value": "https://ticketing-tool-omega.vercel.app/"
+		}
+	]
+}
