@@ -20,10 +20,10 @@ import { CommonModule } from '@angular/common';
   providers: [MessageService]
 })
 export class LoginComponent implements OnInit{
-  
+
   loading: boolean = false;
   loginObj:LoginModel = new LoginModel();
-  
+
   private router = inject(Router);
   private employee = inject(EmployeeService);
   private message = inject(MessageService);
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit{
         next: (res: Api_Response) => {
           if (res.result) {
             localStorage.setItem('user', JSON.stringify(res.data));
-            this.router.navigateByUrl('dashboard');
+            this.router.navigateByUrl('pages/dashboard');
           } else {
             this.loading = false;
             console.log(res.message);

@@ -191,7 +191,7 @@ export class TicketViewComponent {
             detail: 'Ticket Assigned Successfully',
           });
           setTimeout(() => {
-            this.router.navigate(['/tickets']);
+            this.router.navigate(['/pages/tickets']);
           }, 1000);
         } else {
           this.message.add({
@@ -230,7 +230,7 @@ export class TicketViewComponent {
             detail: 'Ticket Started Successfully',
           });
           setTimeout(() => {
-            this.router.navigate(['/tickets']);
+            this.router.navigate(['/pages/tickets']);
           }, 1000);
         } else {
           this.message.add({
@@ -269,7 +269,7 @@ export class TicketViewComponent {
             detail: 'Ticket Closed Successfully',
           });
           setTimeout(() => {
-            this.router.navigate(['/tickets']);
+            this.router.navigate(['/pages/tickets']);
           }, 1000);
         } else {
           this.message.add({
@@ -316,7 +316,7 @@ export class TicketViewComponent {
                 detail: 'Ticket Deleted Successfully',
               });
              setTimeout(() => {
-                this.router.navigate(['/tickets']);
+                this.router.navigate(['/pages/tickets']);
               }, 1000);
             } else {
               this.message.add({

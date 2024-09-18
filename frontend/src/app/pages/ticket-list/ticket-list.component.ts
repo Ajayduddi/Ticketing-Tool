@@ -132,7 +132,7 @@ export class TicketListComponent implements OnInit {
 
   view(ticket_: TicketModel) {
     localStorage.setItem('ticket', JSON.stringify(ticket_));
-    this.router.navigate(['/ticket-view']);
+    this.router.navigate(['/pages/ticket-view']);
   }
 
   reset() {

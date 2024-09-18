@@ -147,7 +147,7 @@ export class NewTicketComponent implements OnInit {
                   detail: 'Ticket Created Successfully',
                 });
                 setTimeout(() => {
-                  this.router.navigateByUrl('tickets');
+                  this.router.navigateByUrl('pages/tickets');
                 }, 1000);
               } else {
                 this.loading = false;
@@ -164,7 +164,7 @@ export class NewTicketComponent implements OnInit {
                 for (let i of err.error.data) {
                   this.message.add({ severity: 'error', summary: 'error', detail: i.msg + ' ' + i.path });
                 }
-            
+
               }
             },
           }
