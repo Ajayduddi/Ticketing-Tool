@@ -169,10 +169,15 @@ router.put('/updateEmployee/:id', checkSchema(employeeSchema), (req, res) => {
                     res.status(500).json({ result: false, message: "Internal Server Error", data: error });
                 });
 
-                if (await user.findByIdAndUpdate(id, data)) {
-                    res.status(200).json({ result: true, message: "Employee updated successfully", data: null });
+                let userd = await user.findById(id);
+                if (userd.role != 'superadmin') {
+                    if (await user.findByIdAndUpdate(id, data)) {
+                        res.status(200).json({ result: true, message: "Employee updated successfully", data: null });
+                    } else {
+                        res.status(404).json({ result: false, message: "Employee not found", data: null });
+                    }
                 } else {
-                    res.status(404).json({ result: false, message: "Employee not found", data: null });
+                    res.status(200).json({ result: true, message: "Employee updated successfully", data: null });
                 }
             } else {
                 res.status(403).json({ result: false, message: "You are not authorized to perform this action", data: null });
@@ -195,10 +200,16 @@ router.delete('/deleteEmployee/:id', (req, res) => {
 
         if (req.user) {
             if (req.user.role === 'superadmin') {
-                if (await user.findByIdAndDelete(id)) {
-                    res.status(200).json({ result: true, message: "Employee deleted successfully", data: null });
+
+                let userd = await user.findById(id);
+                if (userd.role != 'superadmin') {
+                    if (await user.findByIdAndDelete(id)) {
+                        res.status(200).json({ result: true, message: "Employee deleted successfully", data: null });
+                    } else {
+                        res.status(404).json({ result: false, message: "Employee not found", data: null });
+                    }
                 } else {
-                    res.status(404).json({ result: false, message: "Employee not found", data: null });
+                    res.status(200).json({ result: true, message: "Employee deleted successfully", data: null });
                 }
             } else {
                 res.status(403).json({ result: false, message: "You are not authorized to perform this action", data: null });

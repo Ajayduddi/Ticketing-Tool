@@ -55,7 +55,7 @@ router.get('/dashboard', (req, res) => {
                 let allEmployees = await user.find();
                 const newdeptEmployees = allEmployees.filter((x) => x.createdDate >= new Date(new Date().getDate() - 7)).length;
                 allEmployees = allEmployees.length;
-                let openTickets = await ticket.find({status: "Open",});
+                let openTickets = await ticket.find({ status: "Open",});
                 const newopenTickets = tickets.filter((x) => (x.createdDate >= new Date(new Date().getDate() - 7))).length;
                 openTickets = openTickets.length;
                 let ProgressTickets = await ticket.find({ status: "In Progress" });
