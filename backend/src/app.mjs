@@ -31,7 +31,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://ajayduddi.github.io');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Set-Cookie , Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, Accept, Origin, Set-Cookie , Access-Control-Request-Method, Access-Control-Request-Headers', 'Content-Security-Policy');
   next();
 });
 

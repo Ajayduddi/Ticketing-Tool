@@ -1,169 +1,164 @@
 export const employeeSchema = {
     name: {
         isString: {
-            withMessage: 'Please enter a valid name',
+            errorMessage: 'Please enter a valid name',
         },
         notEmpty: {
-            withMessage: 'Name is required',
+            errorMessage: 'Name is required',
         },
     },
     contactNo: {
-       isNumeric: {
-            withMessage: 'Please enter a valid contact number',
+        isNumeric: {
+            errorMessage: 'Please enter a valid contact number',
         },
         notEmpty: {
-            withMessage: 'Contact number is required',
+            errorMessage: 'Contact number is required',
         },
         isLength: {
-            Option: {
-                min: 10,
-                max: 10
-            },
-            withMessage: 'Contact number must be 10 digits',
+            options: { min: 10, max: 10 },
+            errorMessage: 'Contact number must be 10 digits',
         },
     },
     email: {
         isEmail: {
-            withMessage: 'Please enter a valid email',
+            errorMessage: 'Please enter a valid email',
         },
         notEmpty: {
-            withMessage: 'Email is required',
+            errorMessage: 'Email is required',
         },
     },
     password: {
         isLength: {
-            Option: {
-                min: 6,
-                max: 255
-            },
-            withMessage: 'Password must be at least 6 characters long',
+            options: { min: 6, max: 255 },
+            errorMessage: 'Password must be at least 6 characters long',
         },
         isString: {
-            withMessage: 'Please enter a valid password',
+            errorMessage: 'Please enter a valid password',
         },
         notEmpty: {
-            withMessage: 'Password is required',
+            errorMessage: 'Password is required',
         },
         isStrongPassword: {
-            withMessage: 'Password must be strong',
-            strongPasswordOptions: {
+            options: {
                 minLength: 6,
                 maxLength: 255,
-                requireLowercase: true,
-                requireUppercase: true,
-                requireDigit: true,
-                requireSpecialCharacter: true,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 1,
             },
-        }
+            errorMessage: 'Password must include at least one lowercase letter, one uppercase letter, one number, and one special character',
+        },
     },
     gender: {
         isString: {
-            withMessage: 'Please enter a valid gender',
+            errorMessage: 'Please enter a valid gender',
         },
         notEmpty: {
-            withMessage: 'Gender is required',
+            errorMessage: 'Gender is required',
         },
     },
     deptId: {
         isString: {
-            withMessage: 'Please enter a valid department id',
+            errorMessage: 'Please enter a valid department id',
         },
         notEmpty: {
-            withMessage: 'Department id is required',
+            errorMessage: 'Department id is required',
         },
     },
     role: {
         isString: {
-            withMessage: 'Please enter a valid role',
+            errorMessage: 'Please enter a valid role',
         },
         notEmpty: {
-            withMessage: 'Role is required',
+            errorMessage: 'Role is required',
         },
     },
     status: {
         isString: {
-            withMessage: 'Please enter a valid status',
+            errorMessage: 'Please enter a valid status',
         },
         notEmpty: {
-            withMessage: 'Status is required',
+            errorMessage: 'Status is required',
         },
     },
-
 }
 
 
 export const ticketSchema = {
     createdByEmployee: {
         isString: {
-            withMessage: 'Please enter a valid createdByEmployee',
+            errorMessage: 'Please enter a valid createdByEmployee',
         },
         notEmpty: {
-            withMessage: 'CreatedByEmployee is required',
+            errorMessage: 'CreatedByEmployee is required',
         },
     },
     contactNo: {
         isNumeric: {
-            withMessage: 'Please enter a valid contact number',
+            errorMessage: 'Please enter a valid contact number',
         },
         notEmpty: {
-            withMessage: 'Contact number is required',
+            errorMessage: 'Contact number is required',
         },
         isLength: {
-            Option: {
-                min: 10,
-                max: 10
-            },
-            withMessage: 'Contact number must be 10 digits',
+            options: { min: 10, max: 10 },
+            errorMessage: 'Contact number must be 10 digits',
         },
     },
     requestDetails: {
         isString: {
-            withMessage: 'Please enter a valid requestDetails',
+            errorMessage: 'Please enter a valid requestDetails',
         },
         notEmpty: {
-            withMessage: 'RequestDetails is required',
+            errorMessage: 'RequestDetails is required',
         },
     },
     parentCategoryId: {
         isString: {
-            withMessage: 'Please enter a valid parentCategoryId',
+            errorMessage: 'Please enter a valid parentCategoryId',
         },
         notEmpty: {
-            withMessage: 'ParentCategoryId is required',
+            errorMessage: 'ParentCategoryId is required',
         },
     },
     childCategoryId: {
         isString: {
-            withMessage: 'Please enter a valid childCategoryId',
+            errorMessage: 'Please enter a valid childCategoryId',
         },
         notEmpty: {
-            withMessage: 'ChildCategoryId is required',
+            errorMessage: 'ChildCategoryId is required',
         },
     },
     deptId: {
         isString: {
-            withMessage: 'Please enter a valid deptId',
+            errorMessage: 'Please enter a valid deptId',
         },
         notEmpty: {
-            withMessage: 'DeptId is required',
+            errorMessage: 'DeptId is required',
         },
     },
     severity: {
         isString: {
-            withMessage: 'Please enter a valid severity',
+            errorMessage: 'Please enter a valid severity',
         },
         notEmpty: {
-            withMessage: 'Severity is required',
+            errorMessage: 'Severity is required',
         },
     },
     status: {
         isString: {
-            withMessage: 'Please enter a valid status',
+            errorMessage: 'Please enter a valid status',
         },
+        optional: true, // Make it optional if it's not always required
     },
     completedDate: {
-        isDate: {
-            withMessage: 'enter valid date',
-        }
-    }
+        // isISO8601: {
+        //     errorMessage: 'Please enter a valid date in ISO format (YYYY-MM-DD)',
+        // },
+        idDate: {
+            errorMessage: 'Please enter a valid date in YYYY-MM-DD format',
+        },
+        optional: true, // Make it optional if it's not always required
+    },
 }

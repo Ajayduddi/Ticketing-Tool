@@ -23,9 +23,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(
-  new localStrategy(
-    { usernameField: "email" },
-    async (username, password, done) => {
+  new localStrategy({ usernameField: "email" },async (username, password, done) => {
       console.log("inside local strategy");
       try {
         const finduser = await user.findOne({ email: username });
